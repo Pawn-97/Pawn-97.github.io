@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>紅葉狩 V2.1 · 酒店定稿版｜关西红叶季七日 2026.11.29–12.5</title>
-<meta name="description" content="两人 · 京都4晚（四条乌丸 ROYNET）+ 大阪2晚（阪急 RESPIRE）· V2.1 酒店定稿版：按实际酒店位置重排全部交通动线与时间细节，附早餐攻略。">
+<title>紅葉狩 V4 · 少而深版｜关西红叶季七日 2026.11.29–12.5</title>
+<meta name="description" content="两人 · 京都4晚（sequence KYOTO GOJO）+ 大阪2晚（阪急 RESPIRE）· V4 少而深版：京都只留 6 个各有唯一性的点 + 半天纯市内漫步，早起日从 4 天减到 2 天，D1–D6 每晚都有具体安排，奈良改为近铁进站 + 宅急便寄行李。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
     --aka-deep:#8f0000;
     --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
     --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     --ease:cubic-bezier(.22,1,.36,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -121,7 +122,7 @@
   .daynav::-webkit-scrollbar{display:none}
   .daynav a{
     flex:0 0 auto;
-    padding:12px 16px 14px;
+    padding:12px 14px 14px;
     font-family:var(--serif);font-weight:600;font-size:14px;
     color:var(--ink-30);
     border-top:2px solid transparent;margin-top:-1px;
@@ -146,8 +147,13 @@
   }
   .sec-note{font-size:14px;color:var(--ink-60);max-width:56em;margin-bottom:2.2em}
   .sec-note b{color:var(--ink)}
+  .sub-title{
+    font-family:var(--serif);font-weight:600;font-size:19px;
+    padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:6px;
+  }
+  .sub-title small{font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--ink-60);margin-left:.7em;text-transform:uppercase}
 
-  /* ---------- timeline table (booking) ---------- */
+  /* ---------- tables ---------- */
   table{width:100%;border-collapse:collapse;font-size:14.5px}
   th{
     text-align:left;font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
@@ -157,13 +163,28 @@
   td.when{white-space:nowrap;font-family:var(--serif);font-weight:600;color:var(--aka)}
   td .src{display:block;font-size:12px;color:var(--ink-60);margin-top:4px}
 
-  /* ---------- compare table ---------- */
   .compare td:first-child{white-space:nowrap;font-weight:600}
   .compare .win{color:var(--aka);font-weight:600}
-
-  /* ---------- access tables ---------- */
   .access td:first-child{white-space:nowrap;font-weight:600}
-  .access td:last-child{white-space:nowrap;text-align:right;color:var(--ink-60);font-size:13px}
+  .access td:last-child{text-align:right;color:var(--ink-60);font-size:13px}
+  .verdict td:first-child{white-space:nowrap;font-weight:600}
+  .verdict .yes{color:var(--aka);font-weight:600;white-space:nowrap}
+  .verdict .maybe{color:var(--ink-60);font-weight:600;white-space:nowrap}
+  .points td:first-child{font-family:var(--serif);font-weight:600;white-space:nowrap}
+  .points td:last-child{white-space:nowrap;color:var(--ink-60);font-size:13px;text-align:right}
+
+  /* ---------- wake-up compare ---------- */
+  .wake td:nth-child(2),.wake td:nth-child(3),.wake td:nth-child(4){text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .wake .old{color:var(--ink-30);text-decoration:line-through}
+  .wake .new{font-family:var(--serif);font-weight:600;color:var(--aka)}
+  .wake td:first-child{white-space:nowrap;font-weight:600}
+
+  /* ---------- route diagram ---------- */
+  .route-diagram{
+    font-family:var(--mono);font-size:12px;line-height:2.1;color:var(--ink);
+    background:var(--paper-2);padding:22px 24px;overflow-x:auto;white-space:pre;
+    margin-top:26px;border-left:3px solid var(--aka);
+  }
 
   /* ---------- day chapters ---------- */
   .day{border-top:2px solid var(--ink);padding-top:38px;margin-top:70px}
@@ -197,7 +218,7 @@
   }
   .slot p{font-size:14.5px}
   .slot p b{font-weight:600}
-  .slot>.warn,.slot>.opt{grid-column:2}
+  .slot>.warn,.slot>.opt,.slot>.picks{grid-column:2}
   .slot>.warn{margin-top:0}
   .warn{
     margin-top:10px;padding-left:14px;border-left:2px solid var(--aka);
@@ -206,6 +227,29 @@
   .warn b{color:var(--aka)}
   .opt{font-size:13px;color:var(--ink-60);margin-top:8px}
   .opt b{color:var(--ink);font-weight:600}
+
+  /* ---------- evening marker ---------- */
+  .eve-mark{
+    display:flex;align-items:center;gap:.9em;
+    margin:30px 0 2px;padding-top:18px;border-top:1px dashed var(--line);
+    font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--aka);font-weight:600;
+  }
+  .eve-mark::after{content:"";flex:1;height:1px;background:var(--line)}
+  .eve-mark span{
+    font-family:var(--serif);letter-spacing:.1em;font-size:12.5px;
+    text-transform:none;color:var(--ink-60);font-weight:400;white-space:nowrap;
+  }
+
+  /* ---------- pick lists ---------- */
+  .picks{list-style:none;margin-top:10px}
+  .picks li{
+    font-size:13px;padding:8px 0 8px 18px;border-top:1px dotted var(--line);
+    position:relative;line-height:1.7;
+  }
+  .picks li::before{content:"▸";position:absolute;left:0;top:8px;color:var(--aka);font-size:11px}
+  .picks li b{font-weight:600}
+  .picks li em{font-style:normal;color:var(--ink-60);font-size:12px}
 
   /* ---------- generic two-col ---------- */
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px)}
@@ -218,6 +262,15 @@
   ul.tick li{padding:11px 0 11px 22px;border-bottom:1px solid var(--line);font-size:14px;position:relative}
   ul.tick li::before{content:"";position:absolute;left:2px;top:1.35em;width:9px;height:2px;background:var(--aka)}
   ul.tick li b{font-weight:600}
+  ul.tick.cross li{padding-left:24px}
+  ul.tick.cross li::before{content:"×";background:none;color:var(--ink-30);width:auto;height:auto;top:.9em;font-size:15px;left:2px}
+
+  .free{
+    display:inline-block;font-size:10.5px;letter-spacing:.12em;
+    border:1px solid var(--aka);color:var(--aka);
+    padding:0 6px;border-radius:3px;margin-left:.4em;vertical-align:.15em;
+    white-space:nowrap;
+  }
 
   /* ---------- breakfast numbered list ---------- */
   ol.bfast{list-style:none;counter-reset:bf}
@@ -267,6 +320,10 @@
     .cols{grid-template-columns:1fr}
     .slot{grid-template-columns:64px 1fr;gap:12px}
     .hero-circle{top:47%}
+    .route-diagram{font-size:10.5px;padding:16px}
+    .eve-mark span{white-space:normal}
+    table{font-size:13.5px}
+    td{padding:12px 8px 12px 0}
   }
   @media print{
     .daynav,.ver-banner{display:none}
@@ -278,7 +335,7 @@
 <body>
 
 <div class="ver-banner">
-  <span>当前为 <b>V2.1 · 酒店定稿版</b>（交通已按实际酒店重排）</span>
+  <span>当前为 <b>V4.0 · 少而深版</b>（换酒店 sequence KYOTO GOJO · 晚晚有安排 · 早起日 4→2）</span>
   <a href="../kansai-momiji-2026/">对比 V1 · 大阪先行版 →</a>
 </div>
 
@@ -291,24 +348,26 @@
     <span class="l1">紅葉</span>
     <span class="l2">狩り</span>
   </h1>
-  <div class="hero-circle">七日</div>
+  <div class="hero-circle">六景</div>
   <div class="hero-meta rv in">
     <div><span class="k">Dates · 日期</span><strong>2026.11.29 — 12.05</strong></div>
-    <div><span class="k">Route · 路线</span><strong>京都 4 晚 → 大阪 2 晚</strong></div>
-    <div><span class="k">Stay · 酒店</span><strong>四条乌丸 ROYNET / 阪急 RESPIRE</strong></div>
+    <div><span class="k">Route · 路线</span><strong>京都 4 晚 → 奈良 → 大阪 2 晚</strong></div>
+    <div><span class="k">Stay · 酒店</span><strong>sequence KYOTO GOJO / 阪急 RESPIRE</strong></div>
     <div><span class="k">Who · 人数</span><strong>两人</strong></div>
-    <div><span class="k">Theme · 主线</span><strong>红叶优先 · 直奔京都</strong></div>
+    <div><span class="k">Theme · 主线</span><strong>少而深 · 京都只留 6 个点</strong></div>
   </div>
   <div class="hero-flights rv in rv-d1">
     <span><b>去程 11/29</b>　春秋 9C6565 · 10:45 浦东T2 → 14:00 关西T2</span>
     <span><b>返程 12/05</b>　春秋 9C6566 · 15:00 关西T2 → 16:50 浦东T2</span>
     <span>⚠ 春秋在关西机场 T2，往返预留 T1⇄T2 摆渡 10–15 分钟</span>
+    <span>📅 本页所有时刻·票价已按 <b>2026-09-19 各寺官方公告</b>核对</span>
   </div>
 </header>
 
 <!-- ======================= FIXED DAY NAV ======================= -->
 <nav class="daynav" id="daynav">
-  <a href="#prep"><small>Prep</small>準備</a>
+  <a href="#why"><small>Pick</small>選</a>
+  <a href="#prep"><small>Prep</small>備</a>
   <a href="#hotel"><small>Stay</small>宿</a>
   <a href="#d1"><small>11/29</small>D1</a>
   <a href="#d2"><small>11/30</small>D2</a>
@@ -322,22 +381,120 @@
 </nav>
 
 <main>
+<!-- ======================= 选点判定 ======================= -->
+<section id="why">
+  <div class="sec-label rv">Selection<span>選点</span></div>
+  <h2 class="sec-title rv">为什么京都只剩 6 个点</h2>
+  <p class="sec-note rv">V2.1 的京都塞了 <b>13+ 个景点</b>，问题不是数量而是两件事：<b>类别重复</b>（一口气看了 5 个「寺庙＋红叶庭园」）和<b>动线发散</b>（洛北・岚山・东山・宇治四个方向来回横跳，每天 1–2 小时耗在路上）。V4 只保留一条筛选标准——<b>每个点必须提供一种别处没有的东西</b>。于是京都剩 6 个景 + 半天纯市内漫步，<b>早起日从 4 天减到 2 天</b>，峰值步数 22,000 → 19,000。</p>
+
+  <table class="points rv">
+    <thead><tr><th style="width:130px">点</th><th>唯一性（别处给不了的）</th><th style="text-align:right">类别</th></tr></thead>
+    <tbody>
+      <tr><td>岚山</td><td>竹林小径 + 奥嵯峨山坡红叶寺 + 保津川渡月桥——<b>全程唯一的自然山水类</b>，不是庭园</td><td>山·竹林·溪谷</td></tr>
+      <tr><td>醍醐寺</td><td>国宝五重塔（<b>951 年，京都现存最古木造建筑</b>）+ 桃山时代三宝院庭园；<b>红叶季人流只有市中心名所的零头</b></td><td>深山古寺·静谧</td></tr>
+      <tr><td>清水寺<span class="free">清晨</span></td><td>悬空舞台浮在红叶海上；<b>全年 6:00 开门</b>，清晨连带 7:15 的二年坂・三年坂空街</td><td>舞台建筑·俯瞰</td></tr>
+      <tr><td>东福寺</td><td>通天橋俯瞰整条洗玉涧溪谷的枫海，<b>京都红叶规模第一，无替代品</b></td><td>溪谷枫海</td></tr>
+      <tr><td>南禅寺<span class="free">境内免费</span></td><td>明治 21 年（1888）红砖水路阁穿过 17 世纪禅寺，<b>桥上是水道、桥下是步道</b>——京都唯一无二</td><td>红砖水路阁</td></tr>
+      <tr><td>永观堂<span class="free">夜</span></td><td>「もみじの永観堂」放生池倒影 + 池畔约 3,000 株红叶 + 山上多宝塔打灯，<b>京都夜枫天花板</b></td><td>夜枫倒影</td></tr>
+    </tbody>
+  </table>
+  <p class="opt rv" style="margin-top:14px">另加<b>三十三間堂</b>（1001 尊千手观音立像，室内平坦）——它正好在 D4 从东福寺走回酒店的路上，填补 40 分钟空隙，且与前面所有「庭园＋红叶」毫无重复。</p>
+
+  <h4 class="sub-title rv" style="margin-top:64px">你提的 5 个景点：逐一判定<small>Verdict</small></h4>
+  <table class="verdict rv">
+    <thead><tr><th style="width:110px">景点</th><th style="width:130px">判定</th><th>理由与 2026 实况</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>永观堂夜枫</td><td class="yes">✅ 必去 · 压轴</td>
+        <td>京都夜枫第一名，没有争议。2026 展期 <b>11/20–12/6，17:30–20:30（受付止 20:30），¥1,000 现金</b>。<br>⚠ 日间票与夜间票<b>分开、需出场再入</b> → 只看夜场，省 ¥1,000，且放生池倒影夜里更好看。</td>
+      </tr>
+      <tr>
+        <td>东福寺</td><td class="yes">✅ 必去</td>
+        <td>红叶期 11/14–12/6，通天橋・開山堂 <b>8:30 开门</b>（不是 7:30 也不是 9:00），红叶期大人 <b>¥1,000</b>。方丈庭園 9:00–16:00 ¥600。<b>无夜枫</b>，只能白天看 → 必须抢开门第一批。<br>⚠ 拥挤时桥上可能禁止摄影；臥雲橋是「拝観对象外」但也是看溪谷的好位置。</td>
+      </tr>
+      <tr>
+        <td>清水寺</td><td class="yes">✅ 必去 · 只推荐清晨 6:00 场</td>
+        <td>全年 <b>6:00–18:00，¥500</b>——这是它相对其他名所的最大优势。9 点以后＝五条坂上坡 + 人潮 + 排队，体验掉一个档次。<b>清晨场是全程性价比最高的一次早起</b>，还顺带收掉二年坂・三年坂的空街。<br>⚠ 2026 夜間特別拝観有两个官方页面互相矛盾（11/21–11/30 vs 11/22–12/7），本页不依赖它。</td>
+      </tr>
+      <tr>
+        <td>南禅寺</td><td class="yes">✅ 保留 · 零成本顺路</td>
+        <td><b>境内与水路阁完全免费</b>；蹴上站步行 10 分（经ねじりまんぽ），离永观堂只有 10–15 分钟步程——等夜枫开门的那 1 小时正好用在这里。三门 ¥600 / 方丈庭園 ¥600 可选。<br>⚠ <b>12 月起 8:40–16:30，受付止 16:10</b> → 必须安排在下午早段。</td>
+      </tr>
+      <tr>
+        <td>醍醐寺</td><td class="maybe">⚠ 值得去<br>但唯一可砍</td>
+        <td><b>可砍的理由</b>：最远（新酒店门到门 42–45 分）＋ 共通券 <b>¥1,500</b> 偏贵 ＋ 红叶量级不如东福寺。<br><b>保留的理由</b>：① 国宝五重塔（951 年）② 三宝院桃山名庭、表书院国宝 ③ <b>红叶季人流极少</b>，是唯一能安静看红叶的地方 ④ 与南禅寺・永观堂同在东西线上，边际交通成本只有 6 站地铁。<br><b>结论：去，只给上午 2.5 小时，买共通券，不上「上醍醐」（登山单程 1 小时）。</b></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cols rv" style="margin-top:56px">
+    <div>
+      <h4>砍掉的 7 项<small>Cut</small></h4>
+      <ul class="tick cross">
+        <li><b>琉璃光院</b>　❌ <b>硬性去不了</b>：2026 秋季改为往复明信片<b>抽选制</b>，申请截止 <b>8/20（已过）</b>，9/25 开票。唯一机会是开票后盯退票释放</li>
+        <li><b>贵船神社</b>　见顷 11 月上中旬，11/30 去大概率已过峰；单程 1 小时＋下车还要转巴士或爬坡 30 分</li>
+        <li><b>叡电红叶隧道</b>　依附贵船线，单独坐一段往返意义不大</li>
+        <li><b>高台寺（日间）</b>　卧龙池倒影与永观堂放生池倒影<b>同类</b>。夜枫（10/23–12/13，¥800）留作 D4 备份</li>
+        <li><b>伏见稻荷</b>　不是红叶景点，千本鸟居人潮极重，且唯一的清晨时段已给了清水寺</li>
+        <li><b>宇治 / 平等院</b>　凤凰堂属「再看一个庭园」，却是 D5 多出一次行李寄存、多一次上下车的唯一原因。抹茶在京都站中村藤吉可补</li>
+        <li><b>嵯峨野小火车</b>　降级为低优先可选：11/1 抢票、25 分钟车程会吃掉岚山整个下午</li>
+      </ul>
+    </div>
+    <div>
+      <h4>免费的好东西<small>Free</small></h4>
+      <ul class="tick">
+        <li><b>竹林小径</b>　公共道路，24 小时开放</li>
+        <li><b>二年坂・三年坂清晨空街</b>　6:00–8:00 独有，店铺未开时的石板路才是它本来的样子</li>
+        <li><b>蹴上インクライン</b>　废弃船舶铁道斜坡＋两侧红叶隧道</li>
+        <li><b>ねじりまんぽ</b>　蹴上站出口的明治螺旋砌砖隧道</li>
+        <li><b>祇园白川・巽桥黄昏</b>　白川疏水＋柳枝＋石畳＋町家灯笼，日落 16:47 的蓝调时刻</li>
+        <li><b>夜的花见小路</b>　晚 8 点后店铺打烊、游客散尽</li>
+        <li><b>锦市场 / 寺町通 / 新京极</b>　有顶商店街，400 年历史</li>
+        <li><b>先斗町 / 木屋町通</b>　鸭川西岸 2 米宽灯笼窄巷</li>
+        <li><b>八坂神社・円山公園</b>　免费 24h，舞殿灯笼夜间点亮</li>
+        <li><b>奈良公园・兴福寺外观・春日大社参道</b>　喂鹿本身免费（鹿仙贝 ¥200）</li>
+        <li><b>京都站大楼大階段灯光秀</b>　17:00–22:00 每 30 分一场 × 5 分；空中径路 Skyway 10:00–22:00</li>
+        <li><b>法善寺横丁・水挂不动尊</b>　大阪石板路小巷，苔藓覆盖的不动明王</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rv">
+    <h4 class="sub-title" style="margin-top:64px">三条动线，各自独立不打架<small>Routing</small></h4>
+    <div class="route-diagram">D2  西北线   酒店 ─3分→ 五条 ─乌丸线1站→ 京都 ─JR16分→ 嵯峨岚山
+             回程  阪急岚山 ─28分→ 阪急乌丸 ─7分→ 酒店
+
+D3  东南线   酒店 ─3分→ 五条 ─乌丸线2站→ 乌丸御池 ─东西线9站→ 醍醐 ─10分(平坦)
+             下午  全程步行（锦市场→寺町→鸭川→祇园）回程 京阪1站+步行15分
+
+D4  东山线   酒店 ─打车8分→ 清水寺6:00 ─步行下坡30分→ 东福寺8:30
+             ─步行15分→ 三十三間堂 ─步行19分→ 酒店午休
+             ─地铁→ 蹴上（南禅寺 → インクライン → 永观堂夜枫）</div>
+    <p class="opt" style="margin-top:14px"><b>关键发现</b>：醍醐寺・南禅寺・永观堂同在地铁<b>东西线</b>上（醍醐→蹴上 6 站 14 分 ¥260），所以这三个点串起来<b>全程 0 巴士、0 换乘、0 爬坡</b>。这是 V4 能把京都排松的主要技术原因。</p>
+    <p class="opt"><b>2026 红叶偏晚</b>：Weathernews 第 1 回预测京都见顷 <b>12/11</b>（比平年晚约 6 天）→ 11/29–12/5 大概是七分级～见顷，<b>不存在「过季」风险</b>。所以排序逻辑从 V2 的「防凋谢」改成了 <b>「防人流」</b>。</p>
+  </div>
+</section>
+
+<div class="divider-leaf rv"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M50 96 L46 70 L20 88 L30 62 L4 64 L24 48 L6 34 L32 38 L26 10 L44 30 L50 2 L56 30 L74 10 L68 38 L94 34 L76 48 L96 64 L70 62 L80 88 L54 70 Z"/></svg></div>
 
 <!-- ======================= 行前 & 时间轴 ======================= -->
 <section id="prep">
   <div class="sec-label rv">Before Departure<span>行前</span></div>
-  <h2 class="sec-title rv">预约与抢票时间轴</h2>
-  <p class="sec-note rv">全程最关键的一张表。夜枫门票（东寺 / 永观堂 / 高台寺）都是现场买、现金付，不用抢；<b>真正要抢的只有琉璃光院和嵯峨野小火车</b>。</p>
+  <h2 class="sec-title rv">待办时间轴（按今天 9/19 的现状重写）</h2>
+  <p class="sec-note rv">好消息：<b>V4 全程需要「抢」的东西是 0 个</b>。夜枫门票（东寺／永观堂／高台寺／清水寺）全部现场买、现金付、无预约制；琉璃光院已抽选截止，不再指望；小火车已降级为可选。剩下最紧的是<b>签证</b>——距出发只剩 10 周。</p>
   <table class="rv">
-    <thead><tr><th style="width:150px">时间</th><th>动作</th></tr></thead>
+    <thead><tr><th style="width:140px">时间</th><th>动作</th></tr></thead>
     <tbody>
-      <tr><td class="when">现在 · 8月</td><td>机票已订 ✅；<b>酒店已订 ✅</b>：京都四条乌丸大和 ROYNET（11/29–12/2，地铁四条站 1 分钟）＋ 阪急大阪龙仕柏 RESPIRE（12/3–4，JR 大阪站直连 3 分钟），均不含早、保持「可免费取消」直到出签<span class="src">Booking / Agoda / 携程</span></td></tr>
-      <tr><td class="when">9 月</td><td>递签（审核 5–10 个工作日，9 月底前）；关注琉璃光院秋季预约公告<span class="src">指定旅行社代办 · rurikoin.komyoji.com</span></td></tr>
-      <tr><td class="when">9–10 月</td><td><b>琉璃光院</b>：若沿用 2025 制度，11/8–12/7 最盛期为抽选制，主走官网 Web 表单，放票即抢；<b>11/30 参观正踩见顷高峰，抢周一开门早场</b><span class="src">琉璃光院官网预约フォーム</span></td></tr>
-      <tr><td class="when">11/01</td><td><b>嵯峨野小火车抢票日</b>：乘车前 30 天放票（12/1 乘车 → 11/1 开抢），¥880 单程；1 号车厢提前 30 天、2–4 号提前 10 天（11/21）；5 号「富贵号」只当天现场卖<span class="src">sagano-kanko.co.jp（日文页，只认国际信用卡）或 Klook/KKday 代购</span></td></tr>
-      <tr><td class="when">10 月</td><td>核对各寺 2026 夜枫日程：东寺（11/29 晚用）/ 永观堂 / 高台寺是否覆盖 11/29–12/2（往年都开到 12 月上中旬）；清水寺夜间拜观往年 11 月底结束，本行程赶不上，由其他寺补位<span class="src">各寺官网</span></td></tr>
-      <tr><td class="when">提前 2–4 周</td><td>热门餐厅订位：蟹道乐、烧肉「弘」、怀石<span class="src">官网 / TableCheck / 携程美食林</span></td></tr>
-      <tr><td class="when">出发前 1 天</td><td>Visit Japan Web 填写并截图 QR 码（一人一码，最晚入境前 6 小时）；关西机场可扫脸自助通关，省 1 小时<span class="src">vjw.digital.go.jp</span></td></tr>
+      <tr><td class="when">立刻 · 9 月内</td><td><b>签证</b>。审核 5–10 个工作日，<b>这周就交给代办</b>。材料：护照（有效期 6 个月+2 页空白）、白底 3.5×4.5cm 照、申请表、身份证+户口本页、在职证明、资产证明（年收 10 万+流水 或 10 万存款证明；一人达标可带配偶）。<b>2026/7/1 起签证费从 ¥3,000 涨至 ¥15,000</b>，加代办约 ¥900–1,200/人<span class="src">指定旅行社 / 代办机构</span></td></tr>
+      <tr><td class="when">立刻</td><td><b>确认 sequence KYOTO GOJO 预订状态</b>。じゃらん实查 2026-11-29 入住 3 晚 2 人：无早 Twin/Queen 合计约 <b>¥118,446（约 ¥39,500/晚）</b>，含早 ¥131,988，<b>只剩 2 间（空室わずか）</b>。红叶季京都房价极高且会售罄——还没订请立刻订；已订请确认<b>可免费取消</b>直到出签<span class="src">官网 sequencehotels.com/kyoto-gojo / じゃらん / 一休 / Booking</span></td></tr>
+      <tr><td class="when">9/25</td><td><b>琉璃光院开票</b>。2026 秋期是往復はがき抽选制，申请已于 8/20 截止，<b>你已错过</b>。开票后可盯官网的取消释放／第二轮预约——但<b>不要把它算进行程</b>，V4 已按「去不了」重排<span class="src">rurikoin.komyoji.com（⚠ 该站对部分访问返回 403，用浏览器直接开）</span></td></tr>
+      <tr><td class="when">10 月</td><td>① <b>核对 2026 夜枫日程</b>：永观堂 ✅11/20–12/6 ¥1,000｜东寺 ✅10/31–12/13 ¥1,000｜高台寺 ✅10/23–12/13 ¥800｜<b>醍醐寺秋期夜間拝観尚未公布</b><br>② <b>复核清水寺夜枫日期</b>（两个官方页面矛盾：11/21–11/30 vs 11/22–12/7）<br>③ 关注 <b>Weathernews 第 2/3 回红叶预测</b>（第 1 回预测京都见顷 12/11；若后续修正为更晚，D2/D3/D4 顺序可微调）<span class="src">各寺官网 / n-kishou.com</span></td></tr>
+      <tr><td class="when">11 月初<br>提前 2–4 周</td><td><b>餐厅订位</b>：焼肉<b>弘 四条木屋町店</b>（D2 或 D4 晚）｜<b>かに道楽 道頓堀本店</b>（D5 晚）｜<b>味味香祇园</b>（D3 晚，⚠ 周二可能缩短营业，电话确认）｜<b>夫婦善哉</b>（D5，⚠ 周四是否营业，电话确认）<span class="src">yakiniku-hiro.com / kani-honga.com / Hot Pepper / Tabelog</span></td></tr>
+      <tr><td class="when">11/01</td><td><b>嵯峨野小火车放票</b>（乘车前 30 天）。<b>不抢完全不影响行程</b>；若还想坐：¥880 单程，1 号车厢提前 30 天、2–4 号提前 10 天（11/21），5 号「富贵号」只当天现场卖<span class="src">sagano-kanko.co.jp（只认国际信用卡）或 Klook/KKday 代购（贵 2–3 倍）</span></td></tr>
+      <tr><td class="when">11 月中</td><td>① 手机开 <b>Suica / ICOCA</b>（Apple Pay 最方便），充 ¥5,000 起<br>② 备<b>现金 ¥30,000–50,000/人</b>（寺院门票・夜枫・锦市场小摊・新梅田食道街<b>只收现金</b>）<br>③ ⚠ <b>酒店内不收现金</b>，所以<b>信用卡 / Alipay / 微信 / PayPay 至少一种要能用</b><br>④ 装 App：Google Maps・换乘案内（或 NAVITIME）・Tabelog・<b>GO（打车）</b>・Hot Pepper<span class="src">–</span></td></tr>
+      <tr><td class="when">出发前 3 天</td><td>打印往返机票订单、全程酒店订单、简单行程单（海关抽查用）。<b>宅急便收件地址写成日文打印一张</b>（阪急レスパイア大阪 + 你的名字 + 12/4 到着希望），D5 早上交前台时直接用<span class="src">–</span></td></tr>
+      <tr><td class="when">出发前 1 天</td><td><b>Visit Japan Web</b> 填写并截图 QR 码（一人一码，最晚入境前 6 小时）。关西机场可扫脸自助通关，省约 1 小时排队<span class="src">vjw.digital.go.jp</span></td></tr>
+      <tr><td class="when">11/29<br>入住当晚</td><td>⚠ 到前台问三件事：① <b>12/3 宅急便寄大阪的截单时间</b>（官网未公布）② <b>B1 THE BATH 今晚男女哪边</b>（每日轮换）③ <b>THE SAUNA 预约</b>（完全预约制，每小时 6 名）<span class="src">sequence KYOTO GOJO · 075-353-0031</span></td></tr>
     </tbody>
   </table>
 
@@ -349,15 +506,18 @@
         <li><b>2026/7/1 起签证费涨至 15,000 日元</b>，加代办费约 ¥900–1,200/人</li>
         <li>材料：护照（6 个月+有效期、2 页空白）、白底彩照 3.5×4.5、在职证明、资产证明（年收 10 万+流水或 10 万存款；一人达标可带配偶）</li>
         <li>打印备用：往返机票订单、全程酒店订单、行程单</li>
+        <li><b>2026/11/1 起退税新制</b>：商店先付税、机场海关确认带出后退税，流程变慢 → D7 已按提前 3 小时安排</li>
       </ul>
     </div>
     <div class="rv rv-d1">
       <h4>支付 · 穿搭<small>Kit</small></h4>
       <ul class="tick">
-        <li>手机绑 <b>Suica / ICOCA</b>（Apple Pay 直接开卡）；备 ¥30,000–50,000 现金/人——寺院、琉璃光院只收现金</li>
-        <li>带一张 Visa/Master：小火车官网只认国际信用卡</li>
-        <li>11 月底–12 月初京都白天 8–17°C、早晚 3–8°C：洋葱式穿衣 + 围巾手套暖宝宝（夜枫必备）</li>
-        <li><b>舒服的步行鞋</b>：每天 1.5–2.5 万步；别穿红橙黄——会和红叶融为一体，米白 / 藏蓝 / 墨绿出片</li>
+        <li>手机绑 <b>Suica / ICOCA</b>（Apple Pay 直接开卡）；备 ¥30,000–50,000 现金/人——寺院、夜枫、锦市场小摊只收现金</li>
+        <li>⚠ <b>sequence KYOTO GOJO 全馆不收现金、也不收交通 IC</b>：房费、早餐、酒吧、洗衣、宅急便寄件都只能刷卡 / Alipay / 微信 / PayPay / LINE Pay</li>
+        <li>带一张 Visa/Master：部分预约网站不支持银联</li>
+        <li>11 月底–12 月初京都白天 8–17°C、早晚 3–8°C：洋葱式穿衣 + <b>围巾手套暖宝宝</b>（夜枫要户外站 1.5 小时以上，D6 空中庭园是露天观景台）</li>
+        <li><b>舒服的步行鞋</b>：每天 1.3–1.9 万步；常寂光寺・东福寺・永观堂多宝塔都有台阶坡道。别穿红橙黄——会和红叶融为一体，米白 / 藏蓝 / 墨绿出片</li>
+        <li>转换插头不用带（日本两扁脚通用）；充电宝 ≤100Wh 可上飞机；折叠伞</li>
       </ul>
     </div>
   </div>
@@ -366,45 +526,77 @@
 <!-- ======================= 酒店与交通速查 ======================= -->
 <section id="hotel">
   <div class="sec-label rv">Stay<span>住宿</span></div>
-  <h2 class="sec-title rv">已订酒店 · 交通速查</h2>
-  <p class="sec-note rv">两家酒店均<b>不含早</b>（早餐攻略见「食」章节）。京都酒店在地铁+阪急双枢纽上，大阪酒店<b>直连 JR 大阪站、楼下就是友都八喜梅田</b>——因此 D5 回大阪改坐 JR 大和路快速直达、D7 去机场改坐 JR 关空快速直达，全部不用换乘。</p>
+  <h2 class="sec-title rv">酒店 · 6 条会咬人的规则 · 交通速查</h2>
+  <p class="sec-note rv">京都酒店从「四条乌丸 ROYNET」换成 <b>sequence KYOTO GOJO</b>（三井不动产 sequence 品牌，2020 年开业，208 间客房），位置在<b>烏丸通 × 五条通交叉口西北角</b>，比原来往南约 700 米。这个位移<b>让 D4 变轻松了</b>（离清水寺打车只要 8–10 分、离三十三間堂步行 19 分、离京都站地铁 1 站），<b>但让傍晚变麻烦了</b>（锦市场/先斗町/祇园各远 5–10 分钟，且周边是办公街区、20:30 后几乎没得吃）。</p>
+
   <div class="cols">
     <div class="rv">
       <h4>京都 · 4 晚<small>11/29–12/2</small></h4>
       <ul class="tick">
-        <li><b>大和 ROYNET 酒店 · 京都四条乌丸</b><br>地铁乌丸线「四条站」5 号出口<b>步行 1 分钟</b>；阪急「乌丸站」步行 5 分钟；地下街连通，雨天不淋湿</li>
-        <li>周边：锦市场步行 5–8 分钟、祇园步行 20 分钟；楼下多家 Lawson / FamilyMart</li>
+        <li><b>sequence KYOTO GOJO</b>（シークエンス京都五条）<br>下京区五条烏丸町 409 · 075-353-0031<br>地铁乌丸线「<b>五条</b>」站 <b>2 号出口步行 3 分</b>；「四条」站 6 号出口步行 5 分；阪急「乌丸」站 23 号出口步行 7 分；JR 京都站地铁 1 站 / 步行 15–17 分</li>
+        <li>✅ <b>B1 温浴设施</b>：THE BATH（大浴槽＋岩盘浴）与 THE SAUNA，<b>17:00–25:00 / 6:00–12:00，男女每日轮换</b>。客房<b>只有淋浴没有浴缸</b> → 对每天 1.5 万步的行程这是刚需。⚠ 桑拿<b>完全预约制</b>（每小时 6 名），<b>毛巾要从客房自带</b></li>
+        <li>✅ <b>1F THE TASTE</b>（TRANSIT 运营）：早餐 7:00–12:00｜<b>午餐 12:00–14:00</b>｜咖啡 14:00–17:00｜晚餐&amp;酒吧 17:00–23:00（LO 22:00）。⚠ <b>17:00–22:00 有免费欢迎饮品 1 杯</b>；买 ¥660 随行杯则咖啡无限续</li>
+        <li>⚠ 客房偏小（Queen 19.5㎡ / Medium Queen 22.1㎡ / King·Twin 23.4㎡），两个 24–26 寸箱子摊开会很挤；<b>清扫每 2 天 1 次</b>；面临烏丸通主干道，低层或有车流声；<b>无停车场、无客房服务、无自动贩卖机</b></li>
+        <li>周边：便利店步行 1–2 分；西本願寺步行 15 分、東本願寺 13 分（世界遺産・免费）；<b>⚠ 办公街区，20:30 后几乎没得吃</b></li>
       </ul>
-      <table class="access rv" style="margin-top:22px">
-        <thead><tr><th>目的地</th><th>路线</th><th style="text-align:right">门到门</th></tr></thead>
-        <tbody>
-          <tr><td>京都站</td><td>地铁乌丸线 四条→京都（2 站）</td><td>约 10 分钟</td></tr>
-          <tr><td>锦市场</td><td>步行</td><td>5–8 分钟</td></tr>
-          <tr><td>琉璃光院</td><td>阪急乌丸→河原町→京阪祇园四条→出町柳→叡电八濑比叡山口</td><td>约 55–60 分钟</td></tr>
-          <tr><td>岚山</td><td>阪急乌丸→桂→阪急岚山；赶早场走地铁→京都→JR 嵯峨岚山</td><td>约 35 分钟</td></tr>
-          <tr><td>东福寺</td><td>地铁四条→京都→JR 奈良线 1 站</td><td>约 30 分钟</td></tr>
-          <tr><td>永观堂夜枫</td><td>乌丸线→乌丸御池换东西线→蹴上，步行 15 分钟</td><td>约 25 分钟</td></tr>
-        </tbody>
-      </table>
     </div>
     <div class="rv rv-d1">
       <h4>大阪 · 2 晚<small>12/3–4</small></h4>
       <ul class="tick">
         <li><b>阪急大阪龙仕柏 RESPIRE OSAKA</b><br>JR 大阪站 3 楼联络桥出口<b>步行 3 分钟</b>（友都八喜梅田塔 / LINKS UMEDA 直上，大堂在 9 楼）；阪急大阪梅田 / 御堂筋线梅田步行 5 分钟</li>
-        <li>周边：楼下即友都八喜梅田（电器免税）；阪急 / 阪神 / 大丸 / Lucua 环绕；机场利木津巴士站步行 4 分钟</li>
+        <li>周边：楼下即友都八喜梅田（9:30–22:00，电器免税）；阪急 / 阪神 / 大丸 / Lucua 环绕；机场利木津巴士站（新阪急酒店）步行 4 分钟；<b>梅田蓝天大厦空中庭园步行 7–9 分、新梅田食道街步行约 5 分</b></li>
+        <li>不含早 → 梅田站内 bakery / LINKS UMEDA 楼下 7:00 起开门，或友都八喜 8F 餐厅（至 23:00）</li>
       </ul>
       <table class="access rv" style="margin-top:22px">
         <thead><tr><th>目的地</th><th>路线</th><th style="text-align:right">门到门</th></tr></thead>
         <tbody>
           <tr><td>JR 大阪站</td><td>步行（联络桥直连）</td><td>3 分钟</td></tr>
+          <tr><td>空中庭园展望台</td><td>步行（中央北口沿高架）</td><td>7–9 分钟</td></tr>
+          <tr><td>新梅田食道街</td><td>步行（站东侧高架下）</td><td>约 5 分钟</td></tr>
           <tr><td>箕面大滝</td><td>阪急大阪梅田→箕面线（石桥阪大前换乘）</td><td>约 40 分钟</td></tr>
-          <tr><td>道顿堀 / 心斋桥</td><td>御堂筋线 梅田→难波 / 心斋桥</td><td>8 分钟+步行</td></tr>
+          <tr><td>道顿堀 / 难波</td><td>LUCUA 地下直通 Metro 梅田→御堂筋线→难波</td><td>9 分钟+步行</td></tr>
           <tr><td>大阪城</td><td>JR 环状线 大阪→大阪城公园</td><td>约 15 分钟</td></tr>
-          <tr><td>关西机场</td><td><b>JR 关空快速直达</b>（¥1,210）；Haruka 47 分钟 / 利木津巴士 ¥1,600</td><td>约 75 分钟</td></tr>
+          <tr><td>关西机场</td><td><b>JR 关空快速直达</b>（¥1,210）；Haruka 47 分 / 利木津巴士 ¥1,600</td><td>约 75 分钟</td></tr>
         </tbody>
       </table>
     </div>
   </div>
+
+  <h4 class="sub-title rv" style="margin-top:64px">6 条会咬人的酒店规则<small>Must Know</small></h4>
+  <table class="compare rv">
+    <thead><tr><th style="width:170px">规则</th><th>对行程的影响</th></tr></thead>
+    <tbody>
+      <tr><td>check-in <b>17:00</b><br>check-out <b>14:00</b></td><td>D1 我们 17:45 到，正好。⚠ 但若飞机准点、16:30 就到，<b>只能先把行李放大堂自助储物柜</b>（セルフクローク，<b>仅限当日取</b>，不收贵重品），去京都站附近逛到 17:00。<br>✅ check-out 14:00 比一般晚 3 小时 → <b>若 D5 决定不去奈良，可以在京都待到中午再走</b></td></tr>
+      <tr><td><b>全馆无现金化</b></td><td>房费、早餐、酒吧、洗衣、<b>连宅急便寄件</b>都只能刷<b>信用卡 / Alipay / 微信 / PayPay / LINE Pay</b>，<b>不收现金、也不收交通 IC 卡</b>；追加消费当场结算，不能挂房账 → 出发前确认这些支付方式至少一种能用</td></tr>
+      <tr><td>早餐 <b>¥1,980</b><br>供应到 <b>12:00</b></td><td>不含房费，3 选 1 主菜 + 半自助，<b>当天直接去餐厅付款即可、不用预订</b>。「供应到中午」是它最大的优点 → D3（8:00 起床）这种晚起的日子最合适；D2（7:00）、D4（5:30）就走便利店</td></tr>
+      <tr><td><b>宅急便</b><br>前台可寄</td><td>✅ 官方 FAQ 明确前台可办寄件，也接受提前寄到酒店（面单写住宿日期+姓名，入住时领取，<b>拒收到付件</b>）。<br>⚠ <b>承运公司与当日截单时间官网未公布</b>，且<b>寄件费只能无现金支付</b> → <b>11/29 入住当晚就先问清 12/3 早上寄大阪的截单时间</b></td></tr>
+      <tr><td>B1 大浴场<br>17:00–<b>25:00</b></td><td>每晚回酒店后的固定收尾项目，男女每日轮换 → <b>入住当晚问清今天哪边</b>；毛巾从客房自带；<b>桑拿需预约</b>（每小时 6 名），建议 D2 下午休息时顺手约</td></tr>
+      <tr><td>周边夜间<br>餐饮极少</td><td>⚠ 五条烏丸是办公街区，<b>20:30 以后基本没得吃</b> → V4 已把<b>所有晚餐</b>安排在京都站 / 四条河原町 / 先斗町 / 三条京阪，再短程返回（地铁 1 站 7 分，或平路步行 15–18 分）</td></tr>
+    </tbody>
+  </table>
+
+  <h4 class="sub-title rv" style="margin-top:64px">从京都酒店出发 · 交通速查<small>Access</small></h4>
+  <table class="access rv">
+    <thead><tr><th style="width:170px">目的地</th><th>路线</th><th style="text-align:right">门到门 / 车费</th></tr></thead>
+    <tbody>
+      <tr><td>京都站</td><td>地铁乌丸线 五条→京都（<b>1 站 2 分</b>）；或沿烏丸通步行（1.2 km 平坦）</td><td>约 7 分 / ¥220<br>或步行 15–17 分</td></tr>
+      <tr><td>锦市场（西口）</td><td><b>步行</b>（约 700 m）</td><td>9–10 分 / –</td></tr>
+      <tr><td>先斗町・木屋町四条</td><td><b>步行</b>（约 1.2–1.3 km）</td><td>15–16 分 / –</td></tr>
+      <tr><td>四条河原町</td><td>步行（1.4–1.5 km）；或地铁 五条→四条 1 站 + 步行 10 分</td><td>18–19 分 / ¥220</td></tr>
+      <tr><td>祇园 花见小路・白川巽桥</td><td>步行 1.9 km / 2.2 km；或<b>京阪 清水五条→祇園四条 1 站</b>（酒店→清水五条步行 15 分）</td><td>24–28 分 / ¥170</td></tr>
+      <tr><td>清水寺<span class="free">D4 清晨</span></td><td><b>打车</b>（5:50 时地铁巴士都没跑）约 1.7–2.0 km</td><td>8–10 分 / ¥1,000–1,200</td></tr>
+      <tr><td>三十三間堂<span class="free">D4</span></td><td><b>步行</b>（约 1.5 km，沿東山区北行）</td><td>19 分 / –</td></tr>
+      <tr><td>东福寺<span class="free">D4</span></td><td>从清水寺<b>步行</b>（下坡后平路，经三十三間堂外围）或打车 8–10 分</td><td>30 分 / ¥1,000</td></tr>
+      <tr><td>岚山<span class="free">D2</span></td><td>去：五条→京都（地铁 1 站）→ <b>JR 嵯峨野线→嵯峨岚山</b>（离竹林近）<br>回：<b>阪急岚山→桂→阪急乌丸</b> + 步行 7 分（不折返京都站）</td><td>去 45 分 / ¥460<br>回 35 分 / ¥240</td></tr>
+      <tr><td>醍醐寺<span class="free">D3</span></td><td>五条→<b>乌丸御池（2 站）</b>换<b>东西线→醍醐（9 站 19 分）</b>，出站<b>步行 10 分（全程平坦）</b></td><td>42–45 分 / ¥290–330</td></tr>
+      <tr><td>蹴上・南禅寺・永观堂<span class="free">D4</span></td><td>五条→乌丸御池（2 站）换<b>东西线→蹴上（3 站 6–7 分）</b>，出站经ねじりまんぽ步行 10 分</td><td>28–30 分 / ¥260</td></tr>
+      <tr><td>东西线 醍醐↔蹴上</td><td>直达 <b>6 站</b>（小野・椥辻・東野・御陵・山科）</td><td>13–15 分 / ¥260</td></tr>
+      <tr><td>东寺<span class="free">D1 夜</span></td><td>地铁 五条→京都（1 站）+ 步行 12–15 分；或打车</td><td>约 25 分 / ¥220<br>或 10 分 / ¥1,200</td></tr>
+      <tr><td>近铁京都站<span class="free">D5</span></td><td>地铁 五条→京都（1 站）+ 步行 3–5 分（JR 八条口侧）</td><td>12–15 分 / ¥220</td></tr>
+      <tr><td>西本願寺 / 東本願寺</td><td>步行（世界遺産・免费・17:00 前后关门）——<b>雨天或低体力时的就近备选</b></td><td>15 分 / 13 分</td></tr>
+    </tbody>
+  </table>
+  <p class="opt rv" style="margin-top:14px"><b>要不要买 Pass？不要。</b>京都 4 天总车费约 ¥1,700/人（含 D4 清晨打车分摊），任何一日券（地铁一日券 ¥800 / 巴士地铁券 ¥1,100）都跑不回本。⚠ 京都市「巴士↔地铁免费换乘活动」据 2025 年度信息<b>在 11/30 结束</b>，2026 是否续办需 11 月复核。<b>全程尽量用轨道、不用巴士</b>——红叶季京都巴士是著名的地狱（堵车+挤不上车），V4 的动线已做到几乎不需要坐巴士。</p>
 </section>
 
 <div class="divider-leaf rv"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M50 96 L46 70 L20 88 L30 62 L4 64 L24 48 L6 34 L32 38 L26 10 L44 30 L50 2 L56 30 L74 10 L68 38 L94 34 L76 48 L96 64 L70 62 L80 88 L54 70 Z"/></svg></div>
@@ -412,30 +604,52 @@
 <!-- ======================= 逐日行程 ======================= -->
 <section id="days">
   <div class="sec-label rv">Day by Day<span>逐日</span></div>
-  <h2 class="sec-title rv">七日行程</h2>
-  <p class="sec-note rv">红叶优先：抵达日直奔京都，京都三个完整日全部落在工作日（11/30 周一～12/2 周三），并<b>按红叶凋谢风险排序</b>：先洛北（落得最早），再岚山，最后东山线压轴。所有交通动线已按两家实际酒店位置重排，标注了出门时间。</p>
+  <h2 class="sec-title rv">七日行程 · 每晚都有安排</h2>
+  <p class="sec-note rv">节奏原则：<b>每天上午排重头景点</b>（人少 + 体力好）→ <b>13:00–15:00 必须回酒店</b>（新酒店在地铁线上，市区任何地方 25 分钟内能到）→ 傍晚再出门看夜枫或逛街 → <b>回酒店泡 B1 大浴场</b>。夜枫日不与暴走日重叠。每天的「夜」段落都给了具体店名、时间、人均和回程路线。</p>
 
   <!-- D1 -->
   <article class="day rv" id="d1">
     <div class="day-head">
       <div class="day-circle"><span class="n">01</span><span class="d">DAY</span></div>
       <div class="day-titles">
-        <div class="date">11月29日 · 周日 · 宿京都四条乌丸 ROYNET</div>
-        <h3>抵达 · 直奔京都</h3>
-        <div class="route">浦东 → 关西机场 → Haruka → 京都站 → 地铁 2 站到四条 → 东寺夜枫</div>
+        <div class="date">11月29日 · 周日 · 宿 sequence KYOTO GOJO</div>
+        <h3>抵达 · 东寺夜枫开场</h3>
+        <div class="route">浦东T2 → 关西T2 → Haruka → 京都站 → 地铁 1 站到五条 → 东寺夜枫 → 京都站晚餐</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
         <div class="cell"><span class="k">强度</span><span class="stars">★★<span class="off">★</span></span></div>
-        <div class="cell"><span class="k">步数</span>约 10,000</div>
+        <div class="cell"><span class="k">步数</span>约 9,000</div>
+        <div class="cell"><span class="k">起床</span><b>06:30</b>（赶飞机）</div>
         <div class="cell"><span class="k">原则</span>舟车劳顿，夜枫可弃</div>
       </aside>
       <div>
-        <div class="slot"><div class="t">14:00</div><p>落地关西 T2 → 摆渡车到 T1 → 入境（VJW 扫码 + 扫脸通关，出关约 15:00–15:30）</p></div>
-        <div class="slot"><div class="t">15:30</div><p><b>JR Haruka 特急 → 京都站</b>（约 75 分钟，自由席约 ¥3,430；持 ICOCA 可买优惠套票）→ 京都站换<b>地铁乌丸线 2 站 → 四条站</b>（4 分钟 ¥220）→ 5 号出口<b>步行 1 分钟</b>到酒店，check-in 约 17:15–17:45</p></div>
-        <div class="slot"><div class="t">18:00</div><p><b>东寺夜枫</b>（约 ¥1,000 现金）：五重塔 + 红叶倒影，红叶季完美开场。<b>酒店→东寺</b>：地铁四条→京都站（4 分钟）步行 15 分钟；累了打车约 10 分钟（¥1,000 左右）。晚餐京都站拉面小路（看完夜枫走回京都站方向正好）</p>
-        <div class="warn"><b>这是最累的一天</b>（早起赶机 + 飞行 + 夜枫）：撑不住就放弃夜枫直接休息——东寺夜间拜观往年开到 12 月中旬，D2–D4 任何一晚都能补</div></div>
+        <div class="slot"><div class="t">14:00</div><p>落地关西 <b>T2</b> → 摆渡车到 T1 → 入境（VJW QR + 扫脸通关，出关约 15:00–15:30）</p></div>
+        <div class="slot"><div class="t">15:45</div><p><b>JR Haruka 特急 → 京都站</b>（约 75 分钟，自由席约 ¥3,430）</p></div>
+        <div class="slot"><div class="t">17:10</div><p>京都站 → <b>地铁乌丸线 五条（1 站 2 分 ¥220）</b>→ <b>2 号出口步行 3 分</b>到酒店。门到门约 <b>25 分钟</b></p>
+        <div class="opt">行李不重的话，也可以从京都站沿烏丸通<b>步行 15–17 分</b>（1.2 km 平坦），省掉换乘</div></div>
+        <div class="slot"><div class="t">17:45</div><p><b>check-in</b>，放好东西，<b>加衣服</b>（夜枫要站 1.5 小时，12 月初傍晚 3–8°C）</p>
+        <div class="warn">⚠ 酒店 <b>17:00 才能入住</b>；若提前到，行李放<b>大堂自助储物柜</b>（仅限当日取，不收贵重品）。<br>⚠ <b>入住时顺手问前台三件事</b>：① 12/3 早上宅急便寄大阪的<b>截单时间</b>（075-353-0031）② 今晚 B1 <b>THE BATH 男女哪边</b>（每日轮换）③ <b>THE SAUNA 预约</b>（完全预约制，每小时 6 名）</div></div>
+
+        <div class="eve-mark">夜<span>D1 · 东寺夜枫 + 京都站免费夜景</span></div>
+
+        <div class="slot"><div class="t">18:15</div><p><b>地铁乌丸线 五条 → 京都（1 站 2 分 ¥220）</b>→ 八条口方向<b>步行 12–15 分</b>到东寺（门到门约 25 分）</p>
+        <div class="opt">懒得走：<b>打车约 10 分钟 ¥1,200</b></div></div>
+        <div class="slot"><div class="t">18:45</div><p><b>东寺 秋の夜間特別拝観</b>（2026：<b>10/31–12/13，18:00–21:30，受付止 21:00，¥1,000 现金</b>）——<b>五重塔外观打灯 + 塔前水池倒影</b>，京都最经典的一张夜景；夜间开放<b>金堂・讲堂</b>。人流比永观堂小得多，节奏可以自己控制</p>
+        <div class="warn">⚠ 夜间<b>五重塔初层不开放</b>（塔是看外观）</div></div>
+        <div class="slot"><div class="t">20:15</div><p><b>晚餐 · 京都站三选</b>（都在步行 5 分内，都不需预约）</p>
+        <ul class="picks">
+          <li><b>本家第一旭 たかばし本店</b>　酱油豚骨拉面 + 烧豚饭｜周日–周三/周五 <b>6:00–翌1:00</b>，⚠ <b>周四休</b>｜人均 ¥1,000｜京都站八条口东步行 5 分。<em>11/29 是周日 ✅ 开到凌晨，最保险</em></li>
+          <li><b>京都拉面小路</b>（京都站大楼 10F）　全国名店约 8 家｜<b>11:00–22:00（LO 21:30）</b>⚠2025 来源｜人均 ¥900–1,200。<em>选择多，适合两人意见不一</em></li>
+          <li><b>グリルキャピタル東洋亭 ポルタ店</b>　百年洋食（1897 年创业）、<b>番茄汉堡排</b>｜<b>11:00–22:00（LO 21:00）</b>｜人均 ¥1,500–2,500｜京都站北侧地下街 Porta。<em>想吃点「不像拉面」的就选它</em></li>
+        </ul></div>
+        <div class="slot"><div class="t">21:15</div><p><b>免费夜景</b>（就在京都站，不用额外移动）：<b>京都站大楼 大階段灯光秀</b>——171 级台阶的 LED 演出，<b>17:00–22:00 每 30 分钟一场 × 5 分钟，免费</b> ⚠场次现场看告示；<b>空中径路 Skyway</b>（10F 玻璃隧道）+ 大空広場 <b>10:00–22:00 免费</b></p>
+        <div class="opt">想花钱：<b>京都塔展望室 10:00–21:00（最终入场 20:30），¥900</b>，京都站对面步行 5 分</div></div>
+        <div class="slot"><div class="t">22:00</div><p>地铁乌丸线 京都 → 五条（1 站）+ 步行 3 分 = <b>门到门 7 分钟</b></p></div>
+        <div class="slot"><div class="t">22:15</div><p><b>B1 THE BATH 泡澡</b>（开到 25:00）——飞行日最好的收尾。⚠ 毛巾从客房自带</p></div>
+        <div class="slot"><div class="t">B 方案</div><p><b>撑不住就放弃东寺，直接回酒店休息</b>。东寺展期到 12/13，<b>D2/D3/D4 任何一晚都能补</b>，一点不亏</p>
+        <div class="warn">⚠ 但<b>五条烏丸周边 20:30 后几乎没得吃</b> → 要么在京都站吃完再回（如上），要么地铁 五条→四条 1 站 + 步行 10 分到<b>元祖餃子の王将 河原町店</b>（11:00–22:30，人均 ¥800–1,500）</div></div>
       </div>
     </div>
   </article>
@@ -445,24 +659,57 @@
     <div class="day-head">
       <div class="day-circle"><span class="n">02</span><span class="d">DAY</span></div>
       <div class="day-titles">
-        <div class="date">11月30日 · 周一 · 宿京都四条乌丸 ROYNET</div>
-        <h3>洛北 · 琉璃光院与贵船</h3>
-        <div class="route">阪急+京阪+叡电约 55 分钟 → 琉璃光院 → 贵船神社（红叶落得最早，排第一天）</div>
+        <div class="date">11月30日 · 周一 · 宿 sequence KYOTO GOJO</div>
+        <h3>岚山半日 · 鸭川与先斗町</h3>
+        <div class="route">JR 嵯峨岚山 → 竹林 → 常寂光寺 → 天龙寺 → 渡月桥 → 阪急回 → 午休 → 鸭川 → 先斗町</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
         <div class="cell"><span class="k">强度</span><span class="stars">★★<span class="off">★</span></span></div>
-        <div class="cell"><span class="k">步数</span>约 16,000</div>
-        <div class="cell"><span class="k">原则</span>落得最早的先去</div>
+        <div class="cell"><span class="k">步数</span>约 15,000</div>
+        <div class="cell"><span class="k">起床</span><b>07:00</b>（V3 是 06:15）</div>
+        <div class="cell"><span class="k">原则</span>0 巴士，午后强制休息</div>
       </aside>
       <div>
-        <div class="slot"><div class="t">08:15</div><p>酒店出发：阪急乌丸站（步行 5 分钟）→ 河原町 → 步行 5 分钟到京阪祇园四条 → 京阪本线→出町柳 → 叡山电铁→八濑比叡山口（约 55–60 分钟，9:15 左右到）</p></div>
-        <div class="slot"><div class="t">09:30</div><p><b>琉璃光院</b>（¥2,000，<b>只收现金</b>；10:00 开门即进）：书院二楼桌面红叶倒影，参观 60–90 分钟。<b>11/30 正踩见顷高峰</b>，约周一开门早场 → 八濑红叶小径</p></div>
-        <div class="slot"><div class="t">中午</div><p>搭<b>叡山电铁</b>（出町柳方向）：市原～二之濑段红叶隧道，列车减速熄灯（见顷 11 月中下旬，<b>11/30 有机会赶上尾声</b>，点灯以当年公告为准）</p></div>
-        <div class="slot"><div class="t">13:30</div><p><b>贵船神社</b>（灯笼参道；贵船口站转巴士或步行 30 分钟）。贵船例年 11 月上旬–中旬见顷，全京都落得最早——去的是灯笼参道 + 川床溪谷的氛围本身</p></div>
-        <div class="slot"><div class="t">晚</div><p>叡电+京阪原路回市区，出町柳→祇园四条下车就是先斗町/河原町，顺路晚餐。烧肉「弘」（河原町 / 京都站前，需预约）</p>
-        <div class="warn"><b>琉璃光院抢不到票 / 洛北过季 → 平替</b>：醍醐寺（三宝院庭园 + 弁天池，见顷撑到 12 月上旬，¥1,500 秋季通票；地铁四条→乌丸御池换东西线→醍醐约 35 分钟）或大原三千院（17 路巴士 1 小时，¥700，苔庭清幽）</div></div>
+        <div class="slot"><div class="t">07:00</div><p>起床。<b>早餐走便利店</b>（楼下 1–2 分，前一晚买好饭团/三明治/咖啡，¥300–500/人）</p>
+        <div class="opt">酒店早餐 7:00 就开但 ¥1,980，今天不值得——留给 D3 晚起那天</div></div>
+        <div class="slot"><div class="t">07:45</div><p>步行 3 分 → <b>五条站</b> → 乌丸线 五条→京都（1 站 2 分 ¥220）→ <b>JR 嵯峨野线 快速 → 嵯峨岚山</b>（约 16 分 ¥240）</p>
+        <div class="opt"><b>去程走 JR 而不走阪急</b>：竹林小径离 <b>JR 嵯峨岚山站更近</b>（步行约 12–15 分），阪急岚山站过去要 20–25 分且要过渡月桥</div></div>
+        <div class="slot"><div class="t">08:35</div><p><b>竹林小径</b><span class="free">免费 · 24h</span>　公共道路。风穿过竹叶的声音才是它真正的看点，<b>别只顾拍照</b>。往北走到<b>野宫神社</b>（外观，免费）</p>
+        <div class="warn">⚠ 这个时段<b>约有三四成人流</b>，不是无人，但仍远好于 10:00 后的「人肉输送带」。这是「不早起」的合理代价</div></div>
+        <div class="slot"><div class="t">09:00</div><p><b>常寂光寺</b>（¥600，9:00 开门即入）——<b>今天岚山红叶最好的一处</b>：小倉山山麓的斜坡上全是枫，「红叶的马场」参道很出片。官网红叶情报往年更新到 12 月上旬，11/30 状态正好</p>
+        <div class="warn">⚠ <b>入口有上坡，寺内石阶明显</b>——今天唯一的爬坡段，慢慢走</div></div>
+        <div class="slot"><div class="t">10:00</div><p><b>二尊院</b>（¥500，<b>可选</b>）——参道也叫「红叶的马场」，人比常寂光寺少。体力/预算紧就跳过</p></div>
+        <div class="slot"><div class="t">10:40</div><p><b>南下山，再穿一次竹林小径</b>——此时人多了，但你已经看过它安静的样子</p></div>
+        <div class="slot"><div class="t">11:00</div><p><b>天龙寺 曹源池庭园</b>（庭园 ¥500，加方丈等 +¥300；8:30–17:00 受付止 16:50）</p>
+        <div class="opt"><b>可以跳过的理由</b>：曹源池是「池泉回游式庭园」，与 D3 醍醐寺三宝院<b>同类</b>；岚山真正不可替代的是竹林 + 奥嵯峨的山坡红叶寺。跳过省 ¥500–800 和 45 分钟。<br><b>值得进的理由</b>：世界遺産，庭园<b>借景嵐山</b>，是日本庭园史上有名的一例。<br>⚠ 天龙寺「特别早朝拝観 7:30 开门」<b>只在 2026/11/14–11/30</b>——今天正是最后一天，但 7:45 出门赶不上，已放弃该优惠</div></div>
+        <div class="slot"><div class="t">11:45</div><p><b>午餐 · 岚山商店街</b>：汤豆腐 / 鲷茶渍 / 荞麦。<b>% Arabica 岚山店</b>就在渡月桥边，咖啡+看河</p>
+        <div class="warn">⚠ <b>别在 12:00 前进店，会排长队</b>；11:45 刚好</div></div>
+        <div class="slot"><div class="t">13:00</div><p><b>渡月桥</b>看一眼（不上山、不排队）</p></div>
+        <div class="slot"><div class="t">13:45</div><p><b>阪急岚山站</b>（渡月桥南步行 5 分）→ 桂换乘 → <b>阪急乌丸站</b>（约 28 分 ¥240）→ <b>步行 7 分回酒店</b></p>
+        <div class="opt">走阪急回比折返京都站顺</div></div>
+        <div class="slot"><div class="t">14:45</div><p><b>回酒店休息</b>。顺手把 <b>B1 THE SAUNA</b> 预约了（完全预约制，每小时 6 名）</p>
+        <div class="warn">⚠ 这一段不是浪费：上午走了约 7 km 且含爬坡，下午必须躺</div></div>
+
+        <div class="eve-mark">夜<span>D2 · 鸭川黄昏 → 先斗町（轻量版市内）</span></div>
+
+        <div class="slot"><div class="t">16:30</div><p>从酒店沿<b>五条通东行约 1.0 km（步行 12–13 分）到鴨川 · 五条大桥</b></p></div>
+        <div class="slot"><div class="t">16:45</div><p><b>鴨川西岸散步北上</b><span class="free">免费</span>　11 月底<b>日落约 16:47</b>，河原的暮色 + 对岸先斗町的灯笼次第亮起——京都本地人每天看的风景，不要门票</p></div>
+        <div class="slot"><div class="t">17:15</div><p><b>先斗町 → 木屋町通</b><span class="free">免费</span>　鸭川西岸一条 <b>2 米宽的窄巷</b>，两侧全是居酒屋和町家；北端接<b>木屋町通</b>（沿高瀬川，另一条灯笼巷）</p></div>
+        <div class="slot"><div class="t">18:00</div><p><b>晚餐 · 先斗町/木屋町三档</b></p>
+        <ul class="picks">
+          <li><b>¥2,000　元祖餃子の王将 河原町店</b>　饺子+中华定食，便宜量大｜11:00–<b>22:30</b>，全年无休，可刷卡｜不用预约</li>
+          <li><b>¥5,000–7,000　焼肉 弘（ひろ）四条木屋町店</b> ⭐推荐　<b>近江牛</b>烧肉，京都最有名的烧肉连锁｜<b>17:00–23:00</b>｜<b>官网 yakiniku-hiro.com 可网上预约</b>，或电话 075-251-1129</li>
+          <li><b>¥10,000+　弘 祇園山名庵</b>　带庭园的特别店｜⚠ 时刻未核实｜官网预约，人均约 ¥8,000–12,000</li>
+        </ul>
+        <div class="warn">⚠ <b>焼肉弘没有「河原町店」</b>（官网店铺列表核实）。河原町一带对应的是<b>四条木屋町店</b>；另有<b>八条口店</b>（京都站南）和<b>祇園山名庵</b></div></div>
+        <div class="slot"><div class="t">20:00</div><p>从先斗町南口/木屋町四条<b>步行 15–16 分回酒店</b>（约 1.2–1.3 km，平路，夜里沿烏丸通/五条通走很安全）</p>
+        <div class="opt">或阪急 河原町→烏丸 1 站（¥160）+ 步行 7 分</div></div>
+        <div class="slot"><div class="t">20:30</div><p><b>B1 THE BATH / THE SAUNA</b>（开到 25:00）</p>
+        <div class="opt">21:30 可选：1F <b>THE TASTE</b> 酒吧（LO 22:00）喝一杯——<b>17:00–22:00 有免费欢迎饮品 1 杯</b>，今天还没用就用掉</div></div>
+        <div class="slot"><div class="t">备选 C</div><p><b>完全不早起版</b>：睡到 9:00 → 14:30 出发 → 15:15 到岚山 → 常寂光寺 15:30–16:15（⚠ 受付止 16:30）→ 二尊院 → <b>竹林小径 16:20（团客已走，人明显少）</b> → 渡月桥 16:45 看日落 → 17:15 阪急回 → 18:30 先斗町晚餐</p>
+        <div class="opt"><b>优点</b>：不用早起、人少。<b>缺点</b>：12 月下午光线偏暗、寺院 17:00 全关、结尾有点赶</div></div>
       </div>
     </div>
   </article>
@@ -472,25 +719,58 @@
     <div class="day-head">
       <div class="day-circle"><span class="n">03</span><span class="d">DAY</span></div>
       <div class="day-titles">
-        <div class="date">12月1日 · 周二 · 宿京都四条乌丸 ROYNET</div>
-        <h3>岚山一日</h3>
-        <div class="route">地铁+JR 赶竹林早场 → 天龙寺 → 常寂光寺 → 渡月桥 → 阪急直达回酒店</div>
+        <div class="date">12月1日 · 周二 · 宿 sequence KYOTO GOJO</div>
+        <h3>醍醐寺 · 半天市内漫步</h3>
+        <div class="route">东西线直达醍醐（平坦）→ 回酒店午休 → 锦市场 → 寺町 → 鸭川 → 祇园白川黄昏 → 花见小路夜景</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
         <div class="cell"><span class="k">强度</span><span class="stars">★★<span class="off">★</span></span></div>
-        <div class="cell"><span class="k">步数</span>约 18,000</div>
-        <div class="cell"><span class="k">原则</span>竹林早去，晚上早睡</div>
+        <div class="cell"><span class="k">步数</span>约 15,000</div>
+        <div class="cell"><span class="k">起床</span><b>08:00</b>（V3 是 07:30）</div>
+        <div class="cell"><span class="k">原则</span><b>全程最松的一天</b></div>
       </aside>
       <div>
-        <div class="slot"><div class="t">06:30</div><p>酒店出发（赶早场走 JR 线离竹林更近）：地铁四条→京都站→JR 嵯峨野线→<b>嵯峨岚山站</b>（门到门约 35 分钟 ¥460，7:05 左右到）</p></div>
-        <div class="slot"><div class="t">07:15</div><p><b>竹林小径</b>（7:30 前几乎无人）→ <b>天龙寺</b>曹源池庭园（¥500+300）→ 野宫神社</p></div>
-        <div class="slot"><div class="t">中午</div><p>岚山商店街：汤豆腐或「鲷茶渍け」，抹茶冰淇淋</p></div>
-        <div class="slot"><div class="t">13:00</div><p><b>常寂光寺</b>（¥500，山坡俯瞰，12/1 大概率仍在见顷内；若已落叶则改<b>宝严院</b>，见顷到 12 月上旬）→ <b>二尊院</b>「红叶的马场」参道（¥500）→ <b>渡月桥</b>看夕阳</p></div>
-        <div class="slot"><div class="t">可选</div><p><b>嵯峨野小火车</b>（单程 25 分钟，坐右侧看保津峡；14:02 或 15:02 班次从嵯峨站上车；<b>11/1 抢票</b>）</p>
-        <div class="warn">12 月初保津峡红叶可能已过峰，<b>买不到票不遗憾</b></div></div>
-        <div class="slot"><div class="t">晚</div><p>看完夕阳走桥南 <b>5 分钟到阪急岚山站 → 桂换乘 → 阪急乌丸站</b>（约 35 分钟），下车步行 5 分钟即酒店，比折返京都站顺。河原町 / 先斗町晚餐（阪急 1 站），早点休息——明天是全程最累的一天</p></div>
+        <div class="slot"><div class="t">08:00</div><p><b>酒店早餐</b>——<b>¥1,980/人含税</b>，3 选 1 主菜 + 半自助，<b>7:00–12:00（LO 11:30）</b>，当天直接去 1F THE TASTE 付款即可、不用预订。今天不赶时间，值得吃一次</p>
+        <div class="opt">省钱替代：楼下便利店 ¥300–500，或四条一带咖啡店 <b>Morning 套餐 ¥500–700</b>（一杯咖啡送吐司+水煮蛋+沙拉）；体验型可选 <b>イノダコーヒ本店「京の朝食」</b>约 ¥1,500（酒店步行约 15 分，8:00 开门）</div></div>
+        <div class="slot"><div class="t">08:45</div><p>步行 3 分 → <b>五条站</b> → 乌丸线 五条→乌丸御池（2 站 4 分）→ 换<b>东西线 → 醍醐（9 站约 19 分）</b>→ <b>步行 10 分（全程平坦，无坡）</b>。门到门约 <b>42–45 分钟，约 ¥290–330</b></p></div>
+        <div class="slot"><div class="t">09:30</div><p><b>醍醐寺</b>（三宝院 + 伽藍 + 霊宝館<b>共通券 ¥1,500</b>）<br>① <b>三宝院</b>（50 分）：桃山时代名庭 + <b>国宝表书院</b>；<b>藤户石</b>是秀吉亲手置的石；红叶集中在庭园池畔，倒影很好<br>② <b>伽藍</b>（50 分，步行 10–15 分转场）：<b>国宝五重塔（951 年，京都现存最古木造建筑）</b> + 金堂 + <b>弁天池红叶倒影</b>（醍醐寺最出片的一处）<br>③ <b>霊宝館</b>（30 分）：国宝级佛像收藏，<b>室内、有座位</b>，走累了的休息点</p>
+        <div class="warn">⚠ <b>不要上「上醍醐」</b>——登山单程 1 小时，和「放松」完全冲突。<br>⚠ 醍醐寺 2026 年<b>秋期夜間拝観尚未公布</b>（2025 年为 11/22–12/7，18:00–20:50，¥1,300）；V4 已把唯一的夜枫名额给了永观堂，10 月可复核</div></div>
+        <div class="slot"><div class="t">12:05</div><p>东西线 醍醐 → 乌丸御池 → 乌丸线 → <b>五条</b>（约 42 分）</p></div>
+        <div class="slot"><div class="t">13:00</div><p><b>午餐 · 零通勤</b>：酒店 <b>1F THE TASTE 午餐 12:00–14:00</b>——下车就能吃，吃完直接上楼躺</p>
+        <div class="opt">替代：地铁 1 站到京都站，拉面小路（11:00–22:00）或伊势丹餐厅街</div></div>
+        <div class="slot"><div class="t">13:45</div><p><b>午休</b></p></div>
+
+        <div class="eve-mark">午后 · 夜<span>D3 · 你要的「半天在京都市里逛逛」· 约 4.5–5 km 全程平坦</span></div>
+
+        <div class="slot"><div class="t">15:15</div><p>出门。<b>今天剩下的时间全部步行</b>（除了回程）</p></div>
+        <div class="slot"><div class="t">15:30</div><p><b>錦市場</b><span class="free">免费</span>（西口<b>步行 9–10 分</b>，约 700 m）——「京都的厨房」，400 年历史的<b>有顶商店街</b>，约 130 家店。<b>摊店 17:00–18:00 陆续打烊</b>，15:30 到正好</p>
+        <ul class="picks">
+          <li><b>三木鶏卵</b>　玉子烧串｜9:00–<b>17:00</b></li>
+          <li><b>カリカリ博士</b>　炸串 / 可乐饼｜10:00–19:00</li>
+          <li><b>こんなもんじゃ</b>　豆乳甜甜圈（现做）｜10:00–18:00</li>
+          <li><b>桒藤</b>　京渍物｜10:00–18:30</li>
+        </ul>
+        <div class="warn">⚠ 市场小摊<b>基本只收现金</b>；⚠ <b>边走边吃在京都属失礼，请在店门口站着吃完再走</b></div></div>
+        <div class="slot"><div class="t">16:15</div><p><b>寺町通 → 新京极</b><span class="free">免费</span>（从锦市场东口穿出即到）——京都最老的有顶商店街：旧书店、佛具店、老咖啡店、印章店。<b>本地人的日常，不是游客街</b>。有顶棚 → <b>下雨天这段完全不受影响</b></p></div>
+        <div class="slot"><div class="t">16:40</div><p><b>三条通 → 鴨川 · 三条大桥</b>（步行 10 分）——河原看暮色；三条大桥旁的<b>星巴克（町家建筑改造）</b>值得进去坐 15 分钟</p></div>
+        <div class="slot"><div class="t">17:00</div><p><b>祇园 · 花见小路</b><span class="free">免费</span>（过四条大桥到东岸，步行 8 分）——石板路 + 格子窗町家</p>
+        <div class="warn">⚠ <b>私有道路禁止拍照的告示很多</b>，请留意标识；⚠ <b>看到艺伎/舞伎不要追拍</b></div></div>
+        <div class="slot"><div class="t">17:15</div><p>⭐<b>祇园白川 · 巽桥</b><span class="free">免费</span>（花见小路北行 5 分）——<b>今天最好的一段</b>：白川疏水 + 柳枝 + 石畳 + 町家灯笼。<b>日落约 16:47，17:15 前后正是蓝调时刻（blue hour）</b>，灯笼刚亮、天还没全黑</p></div>
+        <div class="slot"><div class="t">17:45</div><p><b>八坂神社</b><span class="free">免费 · 24h</span>（步行 8 分）——舞殿挂满灯笼，夜间点亮（⚠ 点灯至约 22:00，未官方核实）</p></div>
+        <div class="slot"><div class="t">18:15</div><p><b>晚餐 · 祇园/河原町三选</b></p>
+        <ul class="picks">
+          <li><b>味味香 祇园本店</b>　<b>京都咖喱乌冬</b>（本地名物）｜11:30–20:30（<b>LO 20:00</b>）｜¥1,501–2,000。⚠ <b>周二可能缩短营业</b>，12/1 正是周二 → <b>前一天电话确认</b>；⚠ 不接受网上预约</li>
+          <li><b>焼肉 弘 四条木屋町店</b>　近江牛｜17:00–23:00｜¥5,000–7,000｜从祇园步行 15 分或巴士 1 站，<b>官网可预约</b></li>
+          <li><b>元祖餃子の王将 河原町店</b>　保底方案｜11:00–<b>22:30</b>｜¥800–1,500。<em>花见小路看完 20:30 到也来得及</em></li>
+        </ul></div>
+        <div class="slot"><div class="t">19:45</div><p><b>夜的花见小路</b><span class="free">免费</span>——白天人挤人的花见小路，<b>晚 8 点后店铺打烊、游客散尽</b>，石板路只剩灯笼和木屐声，和白天是两个地方</p></div>
+        <div class="slot"><div class="t">20:15</div><p><b>回酒店</b>：<b>京阪 祇園四条 → 清水五条（1 站 ¥170）+ 步行 15 分</b>；或直接<b>步行 24–28 分</b>（约 1.9 km，平路，夜里的五条通很安静）</p></div>
+        <div class="slot"><div class="t">20:45</div><p><b>B1 THE BATH</b>（开到 25:00）</p>
+        <div class="warn">⚠ <b>明天是全程唯一的「真早起日」，今晚务必 22:00 前睡</b>。顺手在便利店买好明天的早餐</div></div>
+        <div class="slot"><div class="t">夜间选项</div><p><b>今晚还能看什么（都已核实，避免白跑）</b></p>
+        <div class="opt">✅ <b>高台寺 秋の夜間拝観</b>：2026 <b>10/23–12/13</b>，参照 2025 年 17:00–21:30（受付止 21:00），<b>¥800</b>，从八坂神社步行 12 分。<b>但 V4 不安排</b>——它的卧龙池倒影与永观堂放生池倒影<b>同类</b>，两天连看两场夜枫会腻。<b>留作 D4 永观堂的备份</b><br>✅ <b>円山公園</b>：免费 24h，但<b>无 illumination</b>，就是个公园<br>❌ <b>知恩院</b>：<b>未查到 2026 秋季夜间 illumination 公告</b>（近年也无此惯例），16:30 后只能看三门外观（国宝，日本最大级木造门）<br>❌ <b>建仁寺</b>：<b>17:00 关门、无夜拝</b>（想看得改到白天，¥600，潮音庭 + 风神雷神图）</div></div>
       </div>
     </div>
   </article>
@@ -500,24 +780,69 @@
     <div class="day-head">
       <div class="day-circle"><span class="n">04</span><span class="d">DAY</span></div>
       <div class="day-titles">
-        <div class="date">12月2日 · 周三 · 宿京都四条乌丸 ROYNET</div>
-        <h3>东山线压轴 · 红叶密度最高</h3>
-        <div class="route">地铁+JR 30 分钟 → 东福寺 → 清水寺 → 高台寺 → 回酒店躺 1 小时 → 永观堂夜枫</div>
+        <div class="date">12月2日 · 周三 · 宿 sequence KYOTO GOJO</div>
+        <h3>东山清晨 → 永观堂夜枫 · 压轴</h3>
+        <div class="route">打车 → 清水寺6:00 → 二年坂空街 → 东福寺8:30 → 三十三間堂 → 酒店午休 → 南禅寺 → インクライン → 永观堂夜枫</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
         <div class="cell"><span class="k">强度</span><span class="stars">★★★</span></div>
-        <div class="cell"><span class="k">步数</span>约 22,000</div>
-        <div class="cell"><span class="k">原则</span>最累一天，午后躺 1 小时</div>
+        <div class="cell"><span class="k">步数</span>约 19,000</div>
+        <div class="cell"><span class="k">起床</span><b>05:30</b>（唯一真早起日）</div>
+        <div class="cell"><span class="k">原则</span>清晨爆发 → <b>午休 2 小时</b> → 傍晚再出门</div>
       </aside>
       <div>
-        <div class="slot"><div class="t">06:50</div><p>酒店出发：地铁四条→京都站→JR 奈良线 1 站→东福寺（门到门约 30 分钟 ¥370）</p></div>
-        <div class="slot"><div class="t">07:30</div><p><b>东福寺</b>早场（红叶季 7:30 开门即进）：通天桥枫海，秋季特别拜观约 ¥1,000</p></div>
-        <div class="slot"><div class="t">10:30</div><p>京阪东福寺→清水五条下车步行 15 分钟 → <b>清水寺</b>（这个时段人会多，接受它）→ 二年坂・三年坂 → 八坂塔（法观寺）</p></div>
-        <div class="slot"><div class="t">中午</div><p>ひさご葫芦亲子丼（11:30 开门，排队 20–40 分钟）或奥丹清水汤豆腐</p></div>
-        <div class="slot"><div class="t">13:30</div><p><b>高台寺</b>（卧龙池倒影 ¥600）→ 円山公园 → 知恩院（免费，三门震撼）→ <b>回酒店休息 1 小时</b>（円山公园→地铁东西线→乌丸御池换乌丸线→四条，约 25 分钟）⚠ 体力管理点；太累就砍知恩院 / 円山段</p></div>
-        <div class="slot"><div class="t">17:30</div><p>酒店出发，乌丸线四条→乌丸御池换东西线→蹴上（约 20 分钟）+ 步行 15 分钟 → <b>永观堂夜枫</b>（约 ¥700 现金；<b>20:00 后入场人最少</b>；12/2 大概率在展期内，10 月确认——若已结束则改高台寺夜枫）→ 茶席酱油团子 + 甘酒收尾</p></div>
+        <div class="slot"><div class="t">05:30</div><p>起床。<b>早餐吃便利店</b>（D3 晚顺路买好）</p>
+        <div class="warn">⚠ 前一晚（D3）<b>22:00 前睡</b></div></div>
+        <div class="slot"><div class="t">05:50</div><p><b>打车 → 清水寺</b>（约 1.7–2.0 km，<b>8–10 分钟 ¥1,000–1,200</b>）。清晨无堵车。<b>前一晚请前台叫车，或用 GO / Uber App</b></p>
+        <div class="warn">⚠ <b>这个点地铁和巴士都还没跑</b>（京都地铁首班车约 6:00 前后），打车是唯一现实选项。<br>✅ <b>新酒店红利</b>：从原来的 12–15 分 ¥1,500–1,800 缩到 8–10 分 ¥1,000–1,200</div>
+        <div class="opt">备选：步行约 <b>35 分</b>（含五条坂上坡，天黑 + 3–8°C），不推荐</div></div>
+        <div class="slot"><div class="t">06:00</div><p><b>清水寺</b>（¥500，<b>全年 6:00 开门</b>）——开门即入，本堂前<b>几乎无人</b>：晨光照在红叶海上，舞台悬空的感觉只有这个时段能体会。<b>奥之院</b>回望舞台的经典机位也不用排队</p></div>
+        <div class="slot"><div class="t">07:15</div><p><b>二年坂 → 三年坂 → 宁宁之道 → 八坂塔（法观寺）外观</b><span class="free">免费</span>　店铺 9 点才开，<b>石板路空无一人</b>——京都最贵的一张免费照片</p></div>
+        <div class="slot"><div class="t">08:00</div><p><b>出发去东福寺</b>（2–2.5 km）</p>
+        <ul class="picks">
+          <li><b>A · 步行 30 分</b>（推荐）　五条坂一路下坡，之后沿東山区小巷南行，基本平路，会经过<b>三十三間堂</b>外围。清晨散步很舒服</li>
+          <li><b>B · 打车 8–10 分 ¥1,000</b>　最稳，保证赶上 8:30 开门</li>
+          <li><b>C · 巴士 207</b>（清水道→東福寺 约 10 分 ¥230）/ <b>京阪</b>（清水五条→東福寺 2 站 ¥170–220）　<em>都要先走 10–20 分钟到站，反而不如步行或打车</em></li>
+        </ul></div>
+        <div class="slot"><div class="t">08:30</div><p><b>东福寺 通天橋・開山堂</b>（红叶期 11/14–12/6，<b>8:30 开门</b>，红叶期大人 <b>¥1,000</b>）——站在通天橋上俯瞰整条<b>洗玉涧溪谷的枫海</b>，京都红叶<b>规模第一</b>的画面</p>
+        <div class="warn">⚠ <b>红叶季拥挤时桥上可能禁止摄影</b>（官方措辞「撮影をご遠慮いただく場合がございます」），听现场指示<br>⚠ <b>臥雲橋是「拝観对象外」</b>（免费通行区），但也是看溪谷的好位置<br>⚠ 东福寺站方向过去<b>最后一段是上坡</b>；通天橋到开山堂还有一段台阶</div>
+        <div class="opt"><b>方丈庭園</b>（9:00–16:00，¥600）：八相の庭枯山水，与溪谷红叶不同类型。时间有余可加，否则跳过</div></div>
+        <div class="slot"><div class="t">10:15</div><p>东福寺 → <b>三十三間堂</b>（约 1.2 km，<b>步行 15–18 分</b>，平路）</p></div>
+        <div class="slot"><div class="t">10:35</div><p><b>三十三間堂</b>（<b>8:30–17:00，¥600</b>）——<b>1001 尊千手观音立像</b>排在日本最长的木造本堂（120 m）里，中央是<b>国宝千手观音坐像</b>，两侧还有 <b>28 部众</b>和<b>风神雷神像</b></p>
+        <div class="opt"><b>为什么加它</b>：① 完全室内、平坦、无台阶，是清晨暴走后最佳的「坐着看」景点 ② 与前面所有「庭园＋红叶」<b>毫无重复</b> ③ <b>正好在回酒店的路上，不绕路</b>（新酒店步行 19 分可达，从旧酒店去不了）</div>
+        <div class="warn">⚠ 堂内<b>禁止摄影</b></div></div>
+        <div class="slot"><div class="t">11:35</div><p><b>步行 19 分回酒店</b>（约 1.5 km，沿烏丸通北上，平坦）</p>
+        <div class="opt">懒得走就<b>打车 8 分 ¥1,000</b>，或市巴士 1 站</div></div>
+        <div class="slot"><div class="t">12:00</div><p><b>午餐 · 零通勤</b>：酒店 <b>1F THE TASTE 午餐 12:00–14:00</b></p>
+        <div class="opt">⚠ 这是新酒店最好用的一点——D4 中午不用为了吃饭再出门</div></div>
+        <div class="slot"><div class="t">12:45</div><p><b>午休 2 小时</b></p>
+        <div class="warn">⚠ 这一段是今天能撑到夜枫的关键，<b>不要省</b></div></div>
+        <div class="slot"><div class="t">14:45</div><p>步行 3 分 → <b>五条站</b> → 乌丸线 五条→乌丸御池（2 站 4 分）→ 换<b>东西线 → 蹴上（3 站约 6–7 分）</b>。门到门约 <b>28–30 分钟，¥260</b></p></div>
+        <div class="slot"><div class="t">15:15</div><p>蹴上站 1 号出口出来就是<b>「ねじりまんぽ」</b><span class="free">免费</span>——螺旋砌砖隧道，明治遗构，穿过去就是南禅寺方向</p></div>
+        <div class="slot"><div class="t">15:25</div><p><b>南禅寺</b>（<b>境内 + 水路阁 免费</b>）<br>• <b>水路阁</b>：明治 21 年（1888）的红砖拱桥，把琵琶湖疏水从山上引过来，<b>桥上是水道、桥下是步道</b>，红叶从红砖拱门里长出来——<b>京都找不出第二处</b><br>• <b>三门</b>（¥600）：日本最大级禅寺山门，可登楼俯瞰；「绝景かな」的出处<br>• <b>方丈庭園</b>（¥600）：虎の子渡し枯山水</p>
+        <div class="warn">⚠ <b>12 月起 8:40–16:30，受付终了 16:10</b> → 三门/方丈要买票<b>必须 16:00 前进去</b>；免费的水路阁区域可以待到 16:30</div></div>
+        <div class="slot"><div class="t">16:15</div><p><b>蹴上インクライン</b><span class="free">免费</span>（南禅寺步行 5 分）——废弃的船舶铁道斜坡，两侧红叶隧道，<b>铁轨 + 落叶</b>很上相。人不多，节奏很慢</p></div>
+        <div class="slot"><div class="t">16:45</div><p>从インクライン沿<b>琵琶湖疏水</b>北走约 15 分钟到永观堂（平路，傍晚的疏水步道本身很好看）；或在冈崎找家咖啡店坐下等开门</p>
+        <div class="warn">⚠ <b>岡崎周边 19:00 后基本没得吃</b>（Blue Bottle 约 18:00 关），所以下午茶要吃饱一点</div></div>
+        <div class="slot"><div class="t">17:30</div><p>⭐<b>永观堂 秋の夜間特別拝観</b>（2026：<b>11/20–12/6，17:30–20:30，受付止 20:30，¥1,000 现金</b>）<br><b>17:30 开场即入是人最少的时段</b>（19:00 后才是高峰）。<b>放生池倒影</b> + 池畔约 3,000 株红叶 + 山上<b>多宝塔</b>打灯 = <b>京都夜枫的天花板</b>。寺门口有茶席，来份<b>酱油团子 + 甘酒</b>收尾</p>
+        <div class="warn">⚠ 12 月傍晚 <b>3–8°C</b>，站 1.5 小时以上：<b>暖宝宝 + 围巾 + 手套必备</b><br>⚠ 永观堂到多宝塔观景台有台阶和坡道<br>⚠ 日间票与夜间票<b>分开、需出场再入</b> → <b>只看夜场，省 ¥1,000</b></div></div>
+
+        <div class="eve-mark">夜<span>D4 · 京都最后一晚</span></div>
+
+        <div class="slot"><div class="t">19:15</div><p><b>回程</b>：永观堂 → 步行 12–15 分到<b>东西线「東山」駅</b>（或走回蹴上站）→ <b>东西线 2 站到「三条京阪」（¥220）</b>→ 换乘<b>京阪「三条」</b></p>
+        <div class="opt">备选：沿<b>三条通</b>一路往西步行 20–25 分到三条京阪/河原町（平路，但冬夜偏累）</div></div>
+        <div class="slot"><div class="t">19:45</div><p><b>晚餐 · 京都最后一晚，三选</b></p>
+        <ul class="picks">
+          <li><b>焼肉 弘 四条木屋町店</b> ⭐推荐　近江牛烧肉，收官大餐｜<b>17:00–23:00</b>｜¥5,000–7,000｜从三条京阪<b>步行 8 分</b>｜<b>官网 yakiniku-hiro.com 预约</b> / 075-251-1129</li>
+          <li><b>元祖餃子の王将 河原町店</b>　便宜快、量大｜11:00–<b>22:30</b>｜¥1,500｜步行 12 分。<em>20:30 到也来得及</em></li>
+          <li><b>累瘫方案 · 京都站</b>　<b>拉面小路</b>（LO 21:30）或 <b>本家第一旭</b>（周三营业，至翌 1:00）｜¥1,000–1,200。<em>东西线 三条京阪→乌丸御池→五条，或京阪三条→清水五条</em></li>
+        </ul>
+        <div class="warn">❌ <b>山元面藏不可行</b>——它是<b>午市店（约 11:00–15:00）且常提前售罄</b>，定休日周四+第 4 周三。<b>当晚餐吃不到</b></div></div>
+        <div class="slot"><div class="t">21:45</div><p><b>回酒店</b>（京阪 三条→清水五条 2 站 ¥170–220 + 步行 15 分）→ <b>B1 THE BATH</b>（开到 25:00）→ <b>打包行李</b>：把 12/3 要寄走的大件整理好，<b>过夜小包</b>（换洗衣物 1 套、洗漱、充电器、贵重物品）单独放门口</p></div>
+        <div class="slot"><div class="t">降级方案</div><p>起不来 → <b>放弃清水寺清晨场</b>，07:30 起床、地铁+JR 直奔东福寺 8:30；三十三間堂、南禅寺、永观堂夜枫照旧</p>
+        <div class="opt">代价是<b>清水寺就没了</b>（改到 D3 下午人最多、体验最差）——所以还是尽量把今天做到</div></div>
       </div>
     </div>
   </article>
@@ -528,24 +853,57 @@
       <div class="day-circle"><span class="n">05</span><span class="d">DAY</span></div>
       <div class="day-titles">
         <div class="date">12月3日 · 周四 · 宿阪急大阪 RESPIRE（JR 大阪站旁）</div>
-        <h3>宇治的抹茶 · 奈良的鹿</h3>
-        <div class="route">京都 → 宇治 → 奈良 → JR 大和路快速直达 JR 大阪站（移动日）</div>
+        <h3>奈良的鹿 → 大阪（全程空手）</h3>
+        <div class="route">宅急便寄行李 → 近铁京都→近铁奈良（出站 5 分就有鹿）→ 东大寺 → JR 奈良→JR 大阪 → 道顿堀</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
-        <div class="cell"><span class="k">强度</span><span class="stars">★★★</span></div>
-        <div class="cell"><span class="k">步数</span>约 20,000</div>
-        <div class="cell"><span class="k">原则</span>行李随身，分段寄存</div>
+        <div class="cell"><span class="k">强度</span><span class="stars">★★<span class="off">★</span></span></div>
+        <div class="cell"><span class="k">步数</span>约 13,000</div>
+        <div class="cell"><span class="k">起床</span><b>08:00</b>（V3 是 07:30）</div>
+        <div class="cell"><span class="k">原则</span><b>行李已寄走，全程空手</b></div>
       </aside>
       <div>
-        <div class="slot"><div class="t">08:30</div><p>退房 → 地铁四条→京都站（4 分钟）。<b>行李随身带</b>：今天不回京都，存京都站会取不到——<b>宇治站投币柜寄存</b>（¥500–700），宇治取回后到奈良站再寄存（大件柜上午紧张，13:00 前到奈良）</p>
-        <div class="warn"><b>行李方案已修正</b>（原方案存京都站投币柜，但当天从奈良直接去大阪不回京都，会取不到）</div></div>
-        <div class="slot"><div class="t">可选</div><p>体力好可先 JR 两站到<b>伏见稻荷大社</b>（免费，千本鸟居走到半山即返，1 小时；行李先存京都站投币柜，玩完取回再去宇治）</p></div>
-        <div class="slot"><div class="t">10:00</div><p>JR 奈良线 京都→<b>宇治</b>（约 25 分钟）：<b>平等院</b>凤凰堂（¥700）→ 中村藤吉本店或伊藤久右卫门，抹茶午餐 + 圣代</p></div>
-        <div class="slot"><div class="t">14:00</div><p>JR → <b>奈良</b>（约 30 分钟）：奈良公园喂鹿（鹿仙贝 ¥200）→ <b>东大寺</b>（¥800）→ 春日大社参道（石灯笼 + 红叶 + 小鹿）</p></div>
-        <div class="slot"><div class="t">17:45</div><p><b>JR 大和路快速 奈良→JR 大阪站直达</b>（约 50 分钟 ¥840，不用换乘）→ 3 楼联络桥出口<b>步行 3 分钟到酒店</b> check-in → 御堂筋线梅田→难波（8 分钟 ¥240）→ <b>道顿堀</b>夜游晚餐（蟹道乐需订位 / 元祖串炸 / 章鱼烧）</p>
-        <div class="warn">D4+D5 连着两天高强度，是全程最辛苦的 48 小时——如果 D4 累垮了，D5 砍掉伏见稻荷或东大寺其一</div></div>
+        <div class="slot"><div class="t">前一晚</div><p><b>12/2 晚上必做的三件事</b></p>
+        <div class="warn">① 大件行李箱<b>全部清空打包好</b>，只留一个<b>过夜小包</b>（换洗衣物 1 套、洗漱用品、充电器、贵重物品）<br>② 问前台<b>宅急便寄件</b>：京都 → 大阪酒店，<b>次日达</b>，120 尺寸约 <b>¥2,040/件</b>（⚠ 二手来源，误差 ±300，以柜台报价为准）。收件地址写 <b>阪急レスパイア大阪 + 你的名字 + 12/4 到着希望</b>（建议打印日文一张）<br>③ ⚠ <b>本酒店全馆无现金化——寄件费只能刷卡 / Alipay / 微信 / PayPay，不收现金</b>；且<b>承运公司与截单时间官网未公布</b> → <b>务必 11/29 入住当晚就先问清 12/3 早上的截单时间</b></div></div>
+        <div class="slot"><div class="t">08:40</div><p>把大件交给前台 → <b>退房</b></p>
+        <div class="opt">⚠ 本酒店 <b>check-out 是 14:00</b>（比一般晚 3 小时）——如果你决定不去奈良，完全可以睡到中午再走，京都→大阪新快速只要 29 分 ¥580</div></div>
+        <div class="slot"><div class="t">08:45</div><p>步行 3 分 → <b>五条站</b> → 乌丸线 五条→京都（1 站 2 分 ¥220）→ 步行 3–5 分到<b>近铁京都站</b>（JR 京都站八条口侧）。门到门约 <b>12–15 分钟</b></p></div>
+        <div class="slot"><div class="t">09:10</div><p><b>近铁 → 近铁奈良</b></p>
+        <ul class="picks">
+          <li><b>快速急行</b>　约 40–45 分｜<b>¥760</b>｜不用买特急券，直接刷 IC 卡上车</li>
+          <li><b>特急</b>　约 35 分｜<b>¥1,280</b>（乘车券 760 + 特急券 520）｜<b>全车指定席</b>，有行李架、坐着舒服。<em>只背小包的话没必要，想舒服就加 ¥520</em></li>
+        </ul></div>
+        <div class="slot"><div class="t">09:55</div><p>近铁奈良站<b>存包</b>（B1 投币柜 ¥300–700）；只背小包可能都不用存</p></div>
+        <div class="slot"><div class="t">10:05</div><p>出站<b>步行 5 分钟</b>就到<b>兴福寺</b>（五重塔外观免费）→ <b>奈良公园鹿群</b>（兴福寺周边就已经有鹿了）</p>
+        <div class="warn">⚠ <b>鹿仙贝 ¥200/束</b>。拿在手里犹豫就会被围抢；<b>先把仙贝藏起来、鞠躬后再拿出来</b>，鹿会跟着点头。⚠ <b>地图/纸质物品要收好，鹿会吃</b></div></div>
+        <div class="slot"><div class="t">11:00</div><p>步行 20–25 分（<b>缓上坡</b>，一路都是鹿和红叶）到<b>东大寺</b> → 南大门（金刚力士像）→ <b>大仏殿 ¥800</b>：<b>世界最大木造建筑之一</b>，卢舍那佛 15 米高。这个体量的震撼没有替代品</p></div>
+        <div class="slot"><div class="t">12:00</div><p><b>午餐</b>：<b>中谷堂艾草麻糬</b>（近铁奈良站旁，现捣表演，约 ¥180/个）当点心；正餐选公园周边定食。<b>志津香釜饭</b>排队长，量力</p>
+        <div class="warn">⚠ <b>奈良公园内餐饮选择少且贵，别指望在公园里吃好</b></div></div>
+        <div class="slot"><div class="t">13:00</div><p><b>春日大社参道</b><span class="free">参道免费</span>（东大寺步行 10–15 分）——<b>石灯笼参道 + 红叶 + 小鹿</b>，全奈良最有气氛的一段路</p>
+        <div class="warn">⚠ <b>只走参道拍照即回</b>——走到本社还要单程 15–20 分钟且是上坡，今天不必</div>
+        <div class="opt">可选：<b>二月堂</b>（免费，需爬坡，能俯瞰奈良盆地，人少）</div></div>
+        <div class="slot"><div class="t">14:15</div><p>回<b>近铁奈良站</b>取包 → <b>步行 12–15 分钟（约 1 km，平坦）到 JR 奈良站</b></p>
+        <div class="opt">不想走就巴士 5 分 ¥220</div></div>
+        <div class="slot"><div class="t">14:45</div><p><b>JR 大和路快速 → JR 大阪站</b>（约 <b>50 分钟 ¥820，直达不换乘</b>）→ 15:3x 到达 → 3 楼联络桥出口<b>步行 3 分钟</b>到酒店 → <b>16:00 check-in</b></p>
+        <div class="warn">⚠ <b>大件行李明天（12/4）才到</b>，今晚用过夜小包</div></div>
+
+        <div class="eve-mark">夜<span>D5 · 道顿堀（大阪第一晚）</span></div>
+
+        <div class="slot"><div class="t">17:30</div><p>酒店 → <b>LUCUA 地下直通 Metro 梅田站</b>（步行 5–8 分）→ <b>御堂筋线 梅田 → 难波（约 9 分 ¥240）</b></p></div>
+        <div class="slot"><div class="t">18:00</div><p><b>道顿堀动线</b>（从难波站御堂筋线<b>北东口</b>出）<br>① 道顿堀<b>南岸东行</b> → <b>蟹道乐本店</b>（大蟹招牌，先拍照）<br>② <b>戎桥 · 格力高「跑跑人」看板</b>——<b>18:00 后点灯最美</b>，大阪最经典的一张<br>③ 折回西行 → <b>法善寺横丁</b><span class="free">免费</span>（石板路 + <b>水挂不动尊</b>，苔藓覆盖的不动明王很有意思）<br>④ <b>夫婦善哉</b>（法善寺横丁内）——红豆汤圆，<b>两碗一份 ¥815</b>，情侣必吃、很应景。⚠ 时刻表来源混乱（一说 10:00–22:00 无休，一说 12:00–16:00 周四休），<b>12/3 是周四 → 行前电话确认</b></p></div>
+        <div class="slot"><div class="t">18:45</div><p><b>晚餐 · 道顿堀三选</b></p>
+        <ul class="picks">
+          <li><b>かに道楽 道頓堀本店</b> ⭐　蟹会席｜<b>11:00–22:00</b>⚠2024–25 来源｜晚餐会席约 <b>¥10,000–15,000</b>，午市套餐 ¥3,000 起⚠未官方核实｜<b>官网 kani-honga.com 在线预约</b>或电话；当日 <b>11:00–17:00 可到店排队候补</b></li>
+          <li><b>元祖串かつ だるま 道頓堀</b>　串炸｜11:30–22:30⚠2025 来源｜¥2,000–3,000｜基本排队即可。<em>记住：酱汁不准二次蘸</em></li>
+          <li><b>たこ焼 くくる 本店</b>　章鱼烧（章鱼足立招牌）｜平日 12:00–23:00⚠2024 来源｜¥700–1,000。<em><b>当小食，不当正餐</b></em></li>
+        </ul></div>
+        <div class="slot"><div class="t">20:00</div><p><b>心斋桥筋商店街</b>：各店约 <b>11:00–20:00/21:00</b>（优衣库至 23:00）⚠概数 → 想购物就 <b>19:00 前</b>去</p>
+        <div class="warn">⚠ <b>黑门市场晚上别去</b>——店铺约 <b>9:00–17/18:00</b> 就打烊了。<b>留给 D7 早上</b></div></div>
+        <div class="slot"><div class="t">21:00</div><p>御堂筋线 难波 → 梅田（9 分 ¥240）→ 步行回酒店 <b>21:30</b></p></div>
+        <div class="slot"><div class="t">省钱版</div><p><b>不想寄宅急便的话</b>：大件拖到<b>近铁奈良站投币柜</b>（B1，¥300–700，最大格约 360×1132×575mm）</p>
+        <div class="warn">⚠ 12/3 是周四但正值红叶季，<b>大格上午晚些时候可能满</b>——务必 <b>9:45 前到</b>；柜满时站旁停车场有 <b>¥500/件人工寄存（至 20:00）</b>。近铁奈良站→兴福寺那 5 分钟是平路可行，但<b>东大寺那 20–25 分钟缓上坡不建议带箱</b></div></div>
       </div>
     </div>
   </article>
@@ -556,21 +914,37 @@
       <div class="day-circle"><span class="n">06</span><span class="d">DAY</span></div>
       <div class="day-titles">
         <div class="date">12月4日 · 周五 · 宿阪急大阪 RESPIRE</div>
-        <h3>箕面大滝 · 大阪城</h3>
-        <div class="route">阪急梅田（步行 5 分钟）→ 箕面 → 大阪城 → 楼下友都八喜购物（恢复日）</div>
+        <h3>箕面 or 不动 · 梅田收尾夜</h3>
+        <div class="route">箕面大滝 / 大阪城 → 楼下友都八喜购物 → 空中庭园夜景 → 新梅田食道街</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
         <div class="cell"><span class="k">强度</span><span class="stars">★<span class="off">★★</span></span></div>
         <div class="cell"><span class="k">步数</span>约 12,000</div>
-        <div class="cell"><span class="k">原则</span>恢复日，慢走</div>
+        <div class="cell"><span class="k">起床</span><b>自然醒</b></div>
+        <div class="cell"><span class="k">原则</span>恢复日 · 大件行李今天到</div>
       </aside>
       <div>
-        <div class="slot"><div class="t">09:00</div><p>酒店步行 5 分钟到阪急大阪梅田站 → <b>箕面大滝</b>（箕面线约 30 分钟，石桥阪大前换乘）：免费，2.7km 红叶山道往返 1.5 小时；见顷 11 月中旬–12 月上旬，<b>12/4 仍有机会</b>。山脚吃红叶天妇罗 ¥250 → 回梅田午餐</p></div>
-        <div class="slot"><div class="t">14:30</div><p>JR 环状线→大阪城公园（约 15 分钟，天守阁 + 银杏）→ 回来购物：<b>楼下就是友都八喜梅田</b>（电器免税 + 优惠券，零路程），药妆梅田商圈搞定；想买潮牌再御堂筋线 8 分钟去心斋桥——<b>大件今天买齐</b></p></div>
-        <div class="slot"><div class="t">晚</div><p>预算留给这顿好的：蟹道乐（道顿堀本店或梅田店，若 D5 没订上）/ 黑门市场海鲜 / 串炸横丁 → 回酒店收拾行李</p>
-        <div class="opt"><b>备选 B（不想走路）</b>：睡到自然醒 → 楼下友都八喜 + 阪急 / 大丸 / Lucua 百货慢慢逛（全在步行 10 分钟内）→ 黑门市场早午餐（御堂筋线 8 分钟）</div></div>
+        <div class="slot"><div class="t">上午</div><p><b>A · 箕面版</b>：酒店步行 5 分到阪急大阪梅田站 → <b>箕面大滝</b>（箕面线约 30 分钟，石桥阪大前换乘；免费，2.7 km 红叶山道往返约 1.5 小时；见顷 11 月中旬–12 月上旬，<b>12/4 仍有机会</b>）→ 山脚吃<b>红叶天妇罗 ¥250</b> → 回梅田午餐</p>
+        <div class="opt"><b>B · 不动版</b>：睡到自然醒 → <b>楼下友都八喜梅田</b>（9:30–22:00）+ <b>阪急うめだ本店</b> + <b>LUCUA</b> 慢慢逛（全在步行 10 分钟内）→ 午餐</div></div>
+        <div class="slot"><div class="t">14:30</div><p>JR 大阪环状线 → <b>大阪城公园</b>（约 15 分 ¥180，天守阁 + 银杏）→ 回来购物：<b>楼下就是友都八喜梅田</b>（电器免税 + 优惠券，零路程），药妆梅田商圈（松本清/尚都乐客）搞定；想买潮牌再御堂筋线 9 分钟去心斋桥——<b>大件今天买齐</b></p>
+        <div class="warn">⚠ <b>阪急うめだ本店全馆 10:00–20:00</b>（B1/B2 食品馆同 20:00 止；12/13F 餐厅 11:00–22:00）→ <b>买机场零食务必 20:00 前，19:00 后糕点常打折</b></div>
+        <div class="opt">LUCUA：购物 10:30–20:30、餐饮至 23:00；B2「いかりスーパー」适合晚归买零食 ⚠闭店时间未核实</div></div>
+
+        <div class="eve-mark">夜<span>D6 · 梅田轻松夜（最后一晚，就在酒店周边）</span></div>
+
+        <div class="slot"><div class="t">17:30</div><p><b>梅田蓝天大厦 空中庭园展望台</b>——<b>9:30–22:30，成人 ¥2,000 / 儿童 ¥500</b>（大阪观光局 2026-09 核实），最终入场约 22:00 ⚠。JR 大阪站<b>中央北口</b>沿高架步行 <b>7–9 分</b>，与酒店同侧</p>
+        <div class="warn">⚠ 12 月初<b>日落约 16:50</b>，所以 17:30 上去看的是<b>纯夜景</b>；想看暮色要 16:30 上去（那就要压缩白天购物）。<b>露天环状展望台，风大很冷，围巾带上</b></div></div>
+        <div class="slot"><div class="t">19:00</div><p><b>晚餐 · 新梅田食道街</b>（JR 大阪站东侧柴田 1 丁目高架下，<b>酒店步行约 5 分</b>）——昭和复古小巷，约 20 家小店，<b>多数只收现金</b></p>
+        <ul class="picks">
+          <li><b>きじ 本店</b> ⭐　<b>大阪烧元祖级</b>（2F）｜11:30–21:30，⚠ <b>周日休</b> → 12/4 周五 ✅｜人均 ¥1,500–2,500 ⚠</li>
+          <li><b>串かつ 松葉 総本店</b>　串炸｜14:00–22:00｜约 ¥2,000</li>
+          <li><b>たこ梅</b>　关东煮 / どて焼き（老铺）｜16:00–22:50 ⚠2023 来源｜¥1,500–2,500</li>
+        </ul>
+        <div class="opt"><b>深夜保底</b>（都在酒店同楼或步行 3 分）：<b>友都八喜梅田 8F 餐厅至 23:00</b>；<b>LUCUA 餐饮至 23:00</b></div></div>
+        <div class="slot"><div class="t">21:00</div><p><b>回酒店打包行李</b>。⚠ <b>今天大件行李到酒店</b>：确认前台已收，顺便把购物战利品重新装箱</p>
+        <div class="warn">⚠ 明天要办<b>机场退税</b>（2026/11/1 起新制：商店先付税、机场海关确认带出后退税，流程慢）——<b>把要退税的商品和护照放在一起，别塞进托运箱底层</b></div></div>
       </div>
     </div>
   </article>
@@ -582,25 +956,68 @@
       <div class="day-titles">
         <div class="date">12月5日 · 周六 · 返程</div>
         <h3>返程 · 酒店直连大阪站</h3>
-        <div class="route">黑门市场或梅田补货 → 步行 3 分钟 → JR 关空快速直达 KIX → 浦东</div>
+        <div class="route">黑门市场或梅田补货 → 步行 3 分钟 → JR 关空快速直达 KIX → 摆渡 T2 → 浦东</div>
       </div>
     </div>
     <div class="day-body">
       <aside class="day-side">
         <div class="cell"><span class="k">强度</span><span class="stars">★<span class="off">★★</span></span></div>
         <div class="cell"><span class="k">步数</span>约 8,000</div>
+        <div class="cell"><span class="k">起床</span><b>自然醒</b></div>
         <div class="cell"><span class="k">原则</span>提前 3 小时到机场</div>
       </aside>
       <div>
-        <div class="slot"><div class="t">上午</div><p>二选一——<b>A·吃货版</b>：7:30 御堂筋线梅田→难波（8 分钟）→ 黑门市场最后吃一顿 → 9:45 回酒店；<b>B·从容版</b>：睡到自然醒，楼下友都八喜 / 阪急百货 B1 / LINKS UMEDA 最后补货 + 站内早餐</p></div>
-        <div class="slot"><div class="t">10:15</div><p>退房 → 步行 3 分钟到 JR 大阪站 → <b>JR 关空快速直达 KIX</b>（约 70 分钟 ¥1,210；10:45 前后上车，约 11:55 抵 T1）→ 摆渡车到 T2（10–15 分钟）</p>
+        <div class="slot"><div class="t">上午</div><p>二选一——<b>A·吃货版</b>：7:30 御堂筋线梅田→难波（9 分钟）→ <b>黑门市场</b>（9:00 开，黑门三平蟹腿约 ¥2,000、现开海胆）→ 9:45 回酒店；<b>B·从容版</b>：睡到自然醒，楼下友都八喜 / 阪急百货 B1（<b>10:00 才开</b>）/ LINKS UMEDA 最后补货 + 站内早餐</p></div>
+        <div class="slot"><div class="t">10:15</div><p>退房 → 步行 3 分钟到 JR 大阪站 → <b>JR 关空快速直达 KIX</b>（约 70 分钟 ¥1,210；10:45 前后上车，约 <b>11:55 抵 T1</b>）→ <b>摆渡车到 T2</b>（10–15 分钟）</p>
         <div class="opt"><b>更稳 / 行李多</b>：Haruka 大阪站→KIX 约 47 分钟；或利木津巴士（新阪急酒店乘车点步行 4 分钟，约 60 分钟 ¥1,600，免搬行李上下楼梯）</div></div>
-        <div class="slot"><div class="t">12:00</div><p>前务必到机场</p>
-        <div class="warn"><b>退税新制</b>：2026/11/1 起日本改为「先付税、机场退税」，流程变慢；春秋在 T2 值机，摆渡时间已算入</div></div>
-        <div class="slot"><div class="t">15:00</div><p>9C6566 起飞 → 16:50 抵浦东 T2</p></div>
+        <div class="slot"><div class="t">12:00</div><p><b>前务必到机场</b>（提前 3 小时）</p>
+        <div class="warn"><b>退税新制</b>：2026/11/1 起日本改为「先付税、机场退税」，流程变慢；春秋在 <b>T2</b> 值机，摆渡时间已算入</div></div>
+        <div class="slot"><div class="t">15:00</div><p>9C6566 起飞 → <b>16:50 抵浦东 T2</b></p></div>
       </div>
     </div>
   </article>
+</section>
+
+<!-- ======================= 奈良专项 ======================= -->
+<section id="nara">
+  <div class="sec-label rv">Nara<span>奈良</span></div>
+  <h2 class="sec-title rv">奈良到底方不方便？</h2>
+  <p class="sec-note rv"><b>结论：奈良并不「不方便」。</b>V2.1 让它显得不方便，是两个可以被修掉的技术问题——<b>选错了车站</b>和<b>拖着行李</b>。修掉之后，奈良是全程性价比最高的一段。</p>
+
+  <div class="cols rv">
+    <div>
+      <h4>问题 1 · 动线其实是顺的<small>Routing</small></h4>
+      <div class="route-diagram" style="margin-top:16px">京都 ─近铁 45分→ 奈良 ─JR大和路快速 50分→ 大阪</div>
+      <ul class="tick" style="margin-top:16px">
+        <li>奈良在京都和大阪之间构成三角形，<b>两段都直达、都不回头</b></li>
+        <li>总乘车 1 小时 35 分，只比「京都→大阪直达（新快速 29 分）」<b>多约 1 小时 5 分</b></li>
+        <li>这 1 小时买到的是<b>喂鹿 + 世界最大木造建筑</b>，划算</li>
+      </ul>
+    </div>
+    <div>
+      <h4>问题 2 · V2.1 选错了车站<small>Station</small></h4>
+      <table class="compare" style="margin-top:16px">
+        <thead><tr><th></th><th>JR 奈良站</th><th class="win">近铁奈良站</th></tr></thead>
+        <tbody>
+          <tr><td>→ 兴福寺/鹿群</td><td>步行 25–30 分或转巴士</td><td class="win"><b>步行 5 分钟</b></td></tr>
+          <tr><td>→ 东大寺大仏殿</td><td><b>步行 30–40 分</b>（2.5 km+）或巴士 10 分 ¥250</td><td class="win">步行 20–25 分（缓上坡，一路都是鹿）</td></tr>
+          <tr><td>红叶季巴士排队</td><td>有，且不确定</td><td class="win">基本用不到巴士</td></tr>
+        </tbody>
+      </table>
+      <p class="opt" style="margin-top:14px"><b>所以：进奈良走近铁，出奈良走 JR。</b>近铁奈良站离公园近一个数量级；离开时 <b>JR 大和路快速直达 JR 大阪站</b>（酒店步行 3 分），比近铁到难波再转御堂筋线省一次换乘、还便宜（¥820 vs ¥920）。两站之间约 1 km / 步行 12–15 分（平坦），或巴士 5 分 ¥220——这是唯一的小代价。</p>
+    </div>
+  </div>
+
+  <h4 class="sub-title rv" style="margin-top:64px">问题 3 · 行李（V2.1 真正的痛点）<small>Luggage</small></h4>
+  <table class="compare rv">
+    <thead><tr><th style="width:200px">方案</th><th style="width:180px">成本</th><th>体验</th></tr></thead>
+    <tbody>
+      <tr><td class="win">A · 宅急便寄到大阪酒店<br>（V4 推荐）</td><td>约 <b>¥2,040/件</b>（120 尺寸，⚠ 二手来源 ±300）<br>两人两箱约 ¥4,080 ≈ ¥200 人民币</td><td><b>全程空手</b>。奈良 4.5–6 km 的步行完全没负担。代价：需要一个过夜小包，大件 <b>12/4 才到</b>。<br>⚠ <b>sequence KYOTO GOJO 前台可寄件，但只收刷卡 / Alipay / 微信 / PayPay，不收现金</b>；承运商与截单时间<b>官网未公布，需入住当晚问清</b></td></tr>
+      <tr><td>B · 近铁奈良站投币柜</td><td>¥300–700/柜</td><td>省钱。⚠ 红叶季周四<b>大格上午晚些会满</b>，必须 9:45 前到；后备是站旁停车场 <b>¥500/件人工寄存（至 20:00）</b></td></tr>
+    </tbody>
+  </table>
+  <p class="opt rv" style="margin-top:14px"><b>奈良半日的真实体力消耗</b>：兴福寺 → 奈良公园喂鹿 → 东大寺 → 春日大社参道，<b>总步行约 4.5–6 km / 8,000–12,000 步</b>，含多处缓上坡。对比 D4 的 19,000 步不算重，且 D5 剩下时间基本都在坐车。</p>
+  <p class="opt rv"><b>宇治为什么砍掉是对的</b>：平等院凤凰堂虽上 ¥10 硬币，但属「再看一个庭园」，与醍醐寺三宝院、天龙寺曹源池同类；而它是 D5 多出一次寄存、多一次上下车的<b>唯一原因</b>。抹茶在京都站「中村藤吉」或 D6 大阪完全能补。若你后来还是想去：<b>只去宇治、不去奈良</b>是可行的轻量版（京都→宇治 JR 17 分，平等院离宇治站步行 10 分，13:30 就能到大阪）；但<b>宇治+奈良都要</b>会把奈良压到下午最挤的时段，不建议。</p>
 </section>
 
 <div class="divider-leaf rv"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M50 96 L46 70 L20 88 L30 62 L4 64 L24 48 L6 34 L32 38 L26 10 L44 30 L50 2 L56 30 L74 10 L68 38 L94 34 L76 48 L96 64 L70 62 L80 88 L54 70 Z"/></svg></div>
@@ -608,33 +1025,73 @@
 <!-- ======================= 体力 ======================= -->
 <section id="stamina">
   <div class="sec-label rv">Pace<span>节奏</span></div>
-  <h2 class="sec-title rv">体力分配</h2>
-  <p class="sec-note rv">每天上午排重头景点，下午 4 点后安排休息或室内，夜枫与暴走日错开。V2 的疲劳曲线<b>前高后低</b>：D4–D5 连续两天高强度是全程最辛苦的 48 小时，换来红叶风险最小化 + 返程日从容（酒店步行 3 分钟上 JR，直达机场）。</p>
-  <div class="stam rv">
-    <div class="lbl">D1 抵达<small>直奔京都 + 夜枫</small></div><div class="bar"><i data-w="42%"></i></div><div class="steps">10,000 步</div>
-    <div class="lbl">D2 洛北<small>落得最早先去</small></div><div class="bar"><i data-w="50%"></i></div><div class="steps">16,000 步</div>
-    <div class="lbl">D3 岚山<small>平坦好走</small></div><div class="bar"><i data-w="60%"></i></div><div class="steps">18,000 步</div>
-    <div class="lbl">D4 东山线<small>最累一天 · 压轴</small></div><div class="bar"><i data-w="100%"></i></div><div class="steps">22,000 步</div>
-    <div class="lbl">D5 移动日<small>宇治→奈良→大阪</small></div><div class="bar"><i data-w="78%"></i></div><div class="steps">20,000 步</div>
-    <div class="lbl">D6 大阪<small>恢复日</small></div><div class="bar"><i data-w="33%"></i></div><div class="steps">12,000 步</div>
-    <div class="lbl">D7 返程<small>大阪站直达机场</small></div><div class="bar"><i data-w="22%"></i></div><div class="steps">8,000 步</div>
+  <h2 class="sec-title rv">起床时间与体力分配</h2>
+  <p class="sec-note rv">你问的「是不是每天都要起这么早」——<b>不是。V4 只保留 2 个早起日</b>：D1 赶飞机（无法改）、D4 清水寺 6:00 开门（你已认可）。其余三天全部推到 7:00–8:00 起床。</p>
+
+  <table class="wake rv">
+    <thead><tr><th style="width:170px">日期</th><th>V3 起床</th><th>V4 起床</th><th>V4 出门</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>D1 11/29（日）</td><td class="old">06:30</td><td class="new">06:30</td><td>–</td><td>赶飞机，无法改</td></tr>
+      <tr><td>D2 11/30（一）</td><td class="old">06:15</td><td class="new">07:00</td><td>07:45</td><td>岚山。放弃了天龙寺「早朝拝観 7:30」（<b>该优惠仅 11/14–11/30</b>）换取多睡 45 分钟</td></tr>
+      <tr><td>D3 12/1（二）</td><td class="old">07:30</td><td class="new">08:00</td><td>08:45</td><td>醍醐寺 9:00 开门，本来就不需要早；<b>全程最松的一天</b></td></tr>
+      <tr><td>D4 12/2（三）</td><td class="old">05:30</td><td class="new">05:30</td><td>05:50</td><td>清水寺 6:00 开门，保留</td></tr>
+      <tr><td>D5 12/3（四）</td><td class="old">07:30</td><td class="new">08:00</td><td>08:45</td><td>奈良。行李寄走后无负担，9:55 到近铁奈良站照样赶在人流前</td></tr>
+      <tr><td>D6 12/4（五）</td><td class="old">自然醒</td><td class="new">自然醒</td><td>–</td><td>大阪恢复日</td></tr>
+      <tr><td>D7 12/5（六）</td><td class="old">自然醒</td><td class="new">自然醒</td><td>10:15</td><td>返程</td></tr>
+    </tbody>
+  </table>
+  <p class="opt rv" style="margin-top:14px"><b>唯一有代价的是 D2</b>：7:45 出门 → 8:35 到竹林小径，那时<b>约有三四成人流</b>，不是无人，但仍远好于 10:00 后的「人肉输送带」。若你后来反悔想独占竹林，只需把 D2 出门时间提前到 6:40——<b>这个开关随时可切，不影响其他任何一天</b>。</p>
+
+  <div class="stam rv" style="margin-top:56px">
+    <div class="lbl">D1 抵达<small>东寺夜枫（可弃）</small></div><div class="bar"><i data-w="47%"></i></div><div class="steps">9,000 步</div>
+    <div class="lbl">D2 岚山<small>07:00 起 · 含爬坡</small></div><div class="bar"><i data-w="79%"></i></div><div class="steps">15,000 步</div>
+    <div class="lbl">D3 醍醐寺+市内<small>08:00 起 · 最松</small></div><div class="bar"><i data-w="79%"></i></div><div class="steps">15,000 步</div>
+    <div class="lbl">D4 东山+夜枫<small>05:30 起 · 含 2 小时午休</small></div><div class="bar"><i data-w="100%"></i></div><div class="steps">19,000 步</div>
+    <div class="lbl">D5 奈良→大阪<small>08:00 起 · 全程空手</small></div><div class="bar"><i data-w="68%"></i></div><div class="steps">13,000 步</div>
+    <div class="lbl">D6 大阪<small>自然醒 · 恢复日</small></div><div class="bar"><i data-w="63%"></i></div><div class="steps">12,000 步</div>
+    <div class="lbl">D7 返程<small>自然醒</small></div><div class="bar"><i data-w="42%"></i></div><div class="steps">8,000 步</div>
+  </div>
+
+  <div class="cols rv" style="margin-top:56px">
+    <div>
+      <h4>V4 比 V2.1 松在哪<small>Compare</small></h4>
+      <ul class="tick">
+        <li><b>早起日从 4 天减到 2 天</b>（只剩赶飞机 + 清水寺）</li>
+        <li>峰值步数 <b>22,000 → 19,000</b>，且只集中在 D4 一天</li>
+        <li>V2.1 是 D2–D5 <b>连续 4 天高强度</b>；V4 是<b>高—低—高—中—低交替</b></li>
+        <li><b>没有任何一天需要拖行李</b>（D5 宅急便寄走）</li>
+        <li>景点从 <b>13+ 个砍到 6 个</b> + 半天纯市内漫步</li>
+        <li>新酒店三个体力红利：① B1 <b>大浴场/桑拿</b>每晚可泡 ② <b>1F 餐厅 12:00–14:00 做午餐</b>，午休日零通勤 ③ 离清水寺/三十三間堂/京都站都更近，<b>D4 上午全程步行即可闭环</b></li>
+        <li>新酒店一个代价：锦市场/先斗町/祇园各远 5–10 分钟步行（都是平路）</li>
+      </ul>
+    </div>
+    <div>
+      <h4>三条铁律<small>Rules</small></h4>
+      <ul class="tick">
+        <li><b>① 每天上午排重头景点</b>——人少 + 体力好，红叶季尤其如此</li>
+        <li><b>② 13:00–15:00 必须回酒店</b>——酒店在地铁线上，市区任何地方 25 分钟内能到，这是「下午躺平」能成立的前提</li>
+        <li><b>③ 夜枫日不与暴走日重叠</b>——永观堂夜枫放在有 2 小时午休的 D4 傍晚，不是放在走了一整天之后</li>
+        <li><b>每晚回酒店泡 B1 大浴场</b>（17:00–25:00）——这是新酒店相对旧酒店最大的体验升级，别浪费</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- ======================= 美食 ======================= -->
 <section id="food">
   <div class="sec-label rv">Eat<span>美食</span></div>
-  <h2 class="sec-title rv">美食地图</h2>
+  <h2 class="sec-title rv">美食地图 · 六晚都有落点</h2>
+  <p class="sec-note rv">⚠ 新酒店在办公街区，<b>20:30 以后周边几乎没得吃</b> → 所有晚餐都安排在京都站 / 四条河原町 / 先斗町 / 三条京阪 / 道顿堀 / 新梅田食道街，再短程返回（地铁 1 站 7 分，或平路步行 15–18 分）。</p>
 
   <div class="rv">
-    <h4 style="font-family:var(--serif);font-weight:600;font-size:19px;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:6px">早餐攻略<small style="font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--ink-60);margin-left:.7em;text-transform:uppercase">两家酒店均不含早 · 按性价比排序</small></h4>
+    <h4 class="sub-title">早餐<small>新酒店有三个选项</small></h4>
     <ol class="bfast">
-      <li><b>便利店</b> ¥300–500/人——两家酒店楼下 1–2 分钟都有 Lawson / FamilyMart；<b>赶路日（D2–D5 早出发）首选</b>，前一晚买好饭团三明治更省时</li>
-      <li><b>咖啡店 Morning 套餐</b> ¥500–700/人——点咖啡送吐司 + 水煮蛋 + 沙拉，日式早餐性价比之王。京都：コメダ珈琲（四条乌丸 / 乌丸御池一带）、小川咖啡、Doutor；大阪：梅田站内及友都八喜楼内多家</li>
-      <li><b>牛丼早餐</b>（松屋 / すき家，24h）¥400–600——四条乌丸、梅田都有店；D3 岚山 6:30 出门这种日子，5 分钟解决一顿热的</li>
-      <li><b>站内 bakery</b>——大阪站 Eki Marché / LINKS UMEDA 楼下面包店 7:00 起开门，D6 / D7 从容日适用</li>
-      <li><b>体验型（全程安排一次就好）</b>：イノダコーヒ本店「京の朝食」¥1,500 左右（京都酒店步行约 12 分钟，8:00 开门）或进进堂三条店面包</li>
-      <li>❌ 酒店自助早餐按日加购价格偏高，不推荐天天吃——<b>全程早餐两人约 ¥3,500–5,000 日元，比酒店自助省一半以上</b></li>
+      <li><b>酒店 1F THE TASTE</b>　<b>¥1,980/人含税</b>，3 选 1 主菜 + 半自助，<b>7:00–12:00（LO 11:30）</b>，当天直接去餐厅付款、不用预订。<b>「供应到中午」是它最大的优点</b> → D3（8:00 起床）、D6 这种晚起的日子最合适</li>
+      <li><b>便利店</b>（楼下 1–2 分）　¥300–500/人，24h。<b>D2（7:00 起）、D4（5:30 起）前一晚买好</b>饭团/三明治/酸奶</li>
+      <li><b>咖啡店 Morning 套餐</b>（四条一带）　¥500–700/人——点一杯咖啡送吐司+水煮蛋+沙拉，性价比之王。コメダ珈琲、小川咖啡、Doutor</li>
+      <li><b>イノダコーヒ本店「京の朝食」</b>　约 ¥1,500，8:00 开门，<b>酒店步行约 15 分</b>（烏丸通北上）。体验型，全程安排一次就好，适合 D3</li>
+      <li><b>大阪侧</b>　梅田站内 bakery / LINKS UMEDA 楼下 7:00 起开门，或友都八喜 8F 餐厅</li>
+      <li>✅ <b>免费福利别浪费</b>：酒店 1F lounge <b>17:00–22:00 有免费欢迎饮品 1 杯</b>；买 <b>¥660 随行杯</b>则咖啡无限续</li>
     </ol>
   </div>
 
@@ -642,18 +1099,24 @@
     <div class="rv">
       <h4>京都<small>D1–D4 主场</small></h4>
       <ul class="tick">
-        <li><b>午餐</b>：ひさご亲子丼、南禅寺汤豆腐（顺正 / 奥丹）、山元面藏乌冬、名代猪排かつくら</li>
-        <li><b>晚餐</b>：烧肉「弘」（需预约）、先斗町京料理、京都站拉面小路（D1 首选）、一兰河原町（深夜友好）</li>
-        <li><b>甜品</b>：中村藤吉抹茶圣代、德屋蕨饼（祇园）；红叶季限定：红叶馒头、栗子甜品、松茸土瓶蒸</li>
+        <li><b>午餐</b>：<b>酒店 1F THE TASTE（12:00–14:00，D3/D4 零通勤）</b>、京都站拉面小路（11:00–22:00）、ひさご葫芦亲子丼（清水寺旁，11:30 开门）、汤豆腐（南禅寺「顺正」/「奥丹清水」）</li>
+        <li><b>晚餐</b>：<b>焼肉弘 四条木屋町店</b>（近江牛，17:00–23:00，<b>官网可预约</b>；⚠ 没有「河原町店」）、<b>先斗町</b>（鸭川西岸窄巷，京料理+居酒屋密集）、元祖餃子の王将河原町店（至 22:30，保底）、味味香祇园（京都咖喱乌冬，LO 20:00，⚠ 周二可能缩短）、京都站 本家第一旭（至翌 1:00，⚠ 周四休）/ 東洋亭 Porta（百年洋食番茄汉堡排，LO 21:00）</li>
+        <li><b>扫街/下午茶</b>：<b>锦市场</b>（D3 下午）——三木鶏卵玉子烧串（至 17:00）、カリカリ博士炸串（至 19:00）、こんなもんじゃ豆乳甜甜圈（至 18:00）、桒藤京渍物（至 18:30）；<b>% Arabica 岚山店</b>（渡月桥边，D2 顺路）；德屋蕨饼（祇园）</li>
+        <li><b>甜品</b>：中村藤吉（京都站店，抹茶圣代——宇治砍掉后在这里补）</li>
+        <li><b>红叶季限定</b>：红叶馒头、栗子甜品、松茸土瓶蒸、<b>永观堂寺门口茶席的酱油团子+甘酒</b>（D4 夜枫后）</li>
+        <li>❌ <b>山元面藏已删除</b>——午市店（约 11:00–15:00）且常提前售罄，不在任何一天的中午动线上，当不了晚餐</li>
       </ul>
     </div>
     <div class="rv rv-d1">
-      <h4>宇治 · 奈良 · 大阪<small>D5–D7</small></h4>
+      <h4>奈良 · 大阪<small>D5–D7</small></h4>
       <ul class="tick">
-        <li>宇治：中村藤吉本店（抹茶荞麦面 + 圣代，本店限定）/ 伊藤久右卫门（抹茶咖喱乌冬猎奇向）</li>
-        <li>奈良：中谷堂艾草麻糬（现捣表演）、志津香釜饭（排队长，量力）</li>
-        <li>道顿堀：蟹道乐（订位）、元祖串炸、一兰、章鱼烧「くくる」（御堂筋线梅田→难波 8 分钟）</li>
-        <li>梅田本地：新梅田食道街（大阪站旁，便宜地道）、阪急百货 B1（步行 5 分钟）；黑门市场：黑门三平海鲜（D7 早午餐首选）、夫妇善哉（法善寺横丁）</li>
+        <li><b>奈良</b>：中谷堂艾草麻糬（近铁奈良站旁，现捣表演，约 ¥180/个）、志津香釜饭（排队长，量力）。⚠ <b>奈良公园内餐饮选择少且贵，别指望在公园里吃好</b></li>
+        <li><b>道顿堀（D5 晚）</b>：かに道楽道頓堀本店（11:00–22:00，<b>官网 kani-honga.com 预约</b>；晚餐会席约 ¥10,000–15,000）、元祖串かつだるま（11:30–22:30，¥2,000–3,000）、たこ焼くくる本店（平日 12:00–23:00，当小食）、<b>法善寺横丁 夫婦善哉</b>（红豆汤圆两份 ¥815，⚠ 周四是否营业需电话确认）</li>
+        <li><b>梅田 · 新梅田食道街（D6 晚）</b>（酒店步行 5 分，昭和复古小巷，<b>多现金</b>）：きじ本店大阪烧（11:30–21:30，⚠ 周日休 → 12/4 周五 ✅）、串かつ松葉総本店（14:00–22:00）、たこ梅关东煮/どて焼き（16:00–22:50）</li>
+        <li><b>深夜保底</b>：友都八喜梅田 <b>8F 餐厅至 23:00</b>（酒店同楼）、LUCUA 餐饮至 23:00</li>
+        <li><b>黑门市场</b>：黑门三平海鲜（蟹腿约 ¥2,000）、现开海胆 —— ⚠ <b>店铺约 9:00–17/18:00 打烊，晚上别去，留给 D7 早上</b></li>
+        <li><b>阪急百貨店 B1/B2 食品馆</b>：<b>10:00–20:00</b>，⚠ <b>买机场零食务必 20:00 前，19:00 后糕点常打折</b></li>
+        <li>箕面山脚：<b>红叶天妇罗 ¥250</b>（D6）</li>
       </ul>
     </div>
   </div>
@@ -668,41 +1131,84 @@
     <tbody>
       <tr><td>签证 ×2（新费率 + 代办）</td><td class="num">1,800–2,400</td></tr>
       <tr><td>往返机票 ×2（已订）</td><td class="num">按实付</td></tr>
-      <tr><td>住宿 6 晚（已订：京 4 + 阪 2）</td><td class="num">按实付</td></tr>
-      <tr><td>境内交通（IC 卡 + 单次票，免 JR Pass）</td><td class="num">700–1,000</td></tr>
-      <tr><td>门票 + 夜枫（两人约 15 处）</td><td class="num">800–1,000</td></tr>
-      <tr><td>餐饮（早餐便利店/咖啡店 + 午定食晚正餐 + 1 顿好的）</td><td class="num">3,000–4,200</td></tr>
+      <tr><td>住宿 6 晚（京都 4 + 大阪 2）<span class="src">じゃらん实查 sequence KYOTO GOJO 11/29 起 3 晚 2 人无早约 ¥118,446（≈¥39,500/晚），4 晚推算约 ¥158,000 ≈ ¥7,500 人民币</span></td><td class="num">按实付</td></tr>
+      <tr><td>境内交通（含 D4 清晨打车 1–2 次分摊）</td><td class="num">750–1,050</td></tr>
+      <tr><td>门票 + 夜枫（两人）</td><td class="num">950–1,200</td></tr>
+      <tr><td>行李宅急便 2 件（⚠ 只能刷卡/Alipay/微信，不收现金）</td><td class="num">约 200</td></tr>
+      <tr><td>餐饮（含 1–2 次酒店早餐 + 1 顿烧肉 + 1 顿蟹会席）</td><td class="num">3,200–4,500</td></tr>
       <tr><td>通讯 + 保险 + 杂项</td><td class="num">400–600</td></tr>
-      <tr class="total"><td>合计（不含购物）</td><td class="num">≈ 15,000–22,000</td></tr>
+      <tr class="total"><td>合计（不含机票、酒店、购物）</td><td class="num">≈ 7,500–9,950</td></tr>
     </tbody>
   </table>
+
+  <div class="rv" style="margin-top:44px">
+    <h4 class="sub-title">门票明细 · 每人（日元）<small>Tickets</small></h4>
+    <div class="cols" style="margin-top:18px">
+      <div>
+        <table>
+          <thead><tr><th>必付</th><th style="text-align:right">金额</th></tr></thead>
+          <tbody>
+            <tr><td>清水寺</td><td style="text-align:right">500</td></tr>
+            <tr><td>东福寺 通天橋・開山堂</td><td style="text-align:right">1,000</td></tr>
+            <tr><td>醍醐寺 共通券</td><td style="text-align:right">1,500</td></tr>
+            <tr><td>永观堂 夜枫</td><td style="text-align:right">1,000</td></tr>
+            <tr><td>常寂光寺</td><td style="text-align:right">600</td></tr>
+            <tr><td>东大寺 大仏殿</td><td style="text-align:right">800</td></tr>
+            <tr><td><b>必付小计</b></td><td style="text-align:right"><b>5,400</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>可选</th><th style="text-align:right">金额</th></tr></thead>
+          <tbody>
+            <tr><td>三十三間堂</td><td style="text-align:right">600</td></tr>
+            <tr><td>东福寺 方丈庭園</td><td style="text-align:right">600</td></tr>
+            <tr><td>南禅寺 三门 / 方丈庭園</td><td style="text-align:right">600 / 600</td></tr>
+            <tr><td>天龙寺 庭园（+方丈 300）</td><td style="text-align:right">500</td></tr>
+            <tr><td>二尊院</td><td style="text-align:right">500</td></tr>
+            <tr><td>东寺夜枫（D1）</td><td style="text-align:right">1,000</td></tr>
+            <tr><td>梅田空中庭园（D6）</td><td style="text-align:right">2,000</td></tr>
+            <tr><td><b>含全部可选项</b></td><td style="text-align:right"><b>≈ 9,500</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="opt" style="margin-top:16px"><b>完全免费</b>：竹林小径・野宫神社・蹴上インクライン・ねじりまんぽ・<b>南禅寺境内+水路阁</b>・锦市场・寺町/新京极・先斗町・木屋町・鴨川・祇园白川巽桥・花见小路・八坂神社・円山公園・兴福寺外观・奈良公园・春日大社参道・法善寺横丁・京都站大階段灯光秀+空中径路・箕面大滝</p>
+  </div>
 
   <div class="cols" style="margin-top:56px">
     <div class="rv">
       <h4>雨天备案<small>Plan B</small></h4>
       <ul class="tick">
-        <li>京都：国立博物馆、二条城（室内多）、锦市场（有顶棚，酒店步行 5–8 分钟）、河原町百货（阪急 1 站）</li>
-        <li>大阪：梅田空中庭园（步行可达）、友都八喜 + LINKS UMEDA（楼下，全天室内）、阪急 / 大丸百货群、海游馆</li>
-        <li>红叶 + 小雨其实更出片（颜色饱和），备折叠伞照常玩；大雨才启用备案</li>
-        <li>岚山大雨：与 D5 的宇治互换（平等院室内 + 抹茶店）</li>
+        <li><b>D2 岚山</b> → 京都国立博物馆（七条）或 <b>三十三間堂</b>（1001 尊千手观音，室内，¥600，<b>酒店步行 19 分</b>）</li>
+        <li><b>D3 醍醐寺</b> → <b>建仁寺</b>（祇园旁，¥600，潮音庭 + 风神雷神图）+ <b>市内漫步照旧</b>（寺町/新京极/锦市场<b>全是有顶商店街</b>，雨天反而合适）</li>
+        <li><b>D4 清晨大雨</b> → <b>放弃清水寺 6:00 场</b>（雨天石板路+上坡不值得），睡到 07:30 直奔<b>东福寺 8:30</b>（通天橋有顶棚，雨天可看）；下午南禅寺+永观堂夜枫照旧（<b>夜枫雨中打灯其实更亮，但会很冷</b>）</li>
+        <li><b>D6 箕面</b> → 大阪侧全室内：友都八喜 + LINKS UMEDA（<b>楼下，全天室内</b>）、阪急/大丸百货群、海游馆；空中庭园雨雾天视野差可跳过</li>
+        <li><b>就近通用</b>：锦市场（有顶棚，步行 9–10 分）、<b>西本願寺/東本願寺</b>（步行 13–15 分，免费，大殿内部可避雨）、京都站大楼（空中径路+伊势丹，室内一整天）</li>
+        <li>红叶 + 小雨其实<b>更出片</b>（颜色饱和度高），备折叠伞照常玩；<b>大雨才启用备案</b></li>
       </ul>
     </div>
     <div class="rv rv-d1">
-      <h4>购物提示<small>Tax Free</small></h4>
+      <h4>购物 · 省钱杠杆<small>Tax Free</small></h4>
       <ul class="tick">
-        <li>药妆电器<b>全部留到 D6 大阪买</b>：<b>电器就在楼下友都八喜梅田</b>（免税 + 优惠券），药妆梅田商圈密集，不必专门跑难波</li>
-        <li>唐吉诃德满 ¥10,000 免税 + 5% 电子券；梅田店御堂筋线沿线，D6 晚上可逛</li>
-        <li>伴手礼：呼吸巧克力、Royce 生巧、宇治抹茶系列（D5 顺手买）、京都生八桥</li>
-        <li><b>2026/11/1 起退税新制</b>：先付税、机场退税，流程变慢——D7 已按提前 3 小时安排</li>
+        <li><b>药妆电器全部留到 D6 大阪买</b>：<b>电器就在楼下友都八喜梅田</b>（9:30–22:00，免税 + 优惠券，零路程），药妆梅田商圈密集，不必专门跑难波</li>
+        <li>⚠ <b>京都侧别购物</b>：新酒店离四条河原町 18–19 分步行；锦市场/寺町通买伴手礼（生八桥、京渍物、抹茶点心）就够</li>
+        <li>⚠ <b>阪急うめだ本店全馆 10:00–20:00</b> → 买机场零食务必 20:00 前，19:00 后糕点常打折</li>
+        <li>唐吉诃德满 ¥10,000 免税 + 5% 电子券；梅田店在御堂筋线沿线，D6 晚上可逛</li>
+        <li>伴手礼：呼吸巧克力、食倒太郎布丁、Royce 生巧、宇治抹茶系列（京都站中村藤吉/伊藤久右卫门）、京都生八桥</li>
+        <li><b>2026/11/1 起退税新制</b>：先付税、机场退税，流程变慢——D7 已按提前 3 小时安排；<b>D6 晚打包时把退税商品和护照放一起，别塞进托运箱底层</b></li>
+        <li><b>省钱杠杆</b>：早餐以便利店 + Morning 套餐为主（酒店早餐 ¥1,980 只在晚起的日子吃 1–2 次）｜<b>和服体验跳过</b>（¥300+/人，红叶季穿木屐走 1.5 万步是灾难）｜<b>免 JR Pass</b>（全部单买票更划算，D7 关空快速 ¥1,210 比 Haruka 便宜一半多）｜<b>lounge 免费欢迎饮品每晚用掉</b>（等于省下 4 杯咖啡）</li>
+        <li>V4 相比 V2.1 砍掉琉璃光院（¥2,000/人）+ 贵船（叡电往返约 ¥1,000/人）+ 宇治（¥480 + 平等院 ¥700/人）→ <b>每人省约 ¥4,000 门票交通费</b>，且省下的是一天里最累的 2 小时通勤</li>
       </ul>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="mark">紅葉狩り · <em>关西红叶季七日 · V2.1 酒店定稿版</em></div>
-  <div>2026.11.29 — 12.05 ｜ 四条乌丸 ROYNET 4 晚 + 阪急 RESPIRE 2 晚 ｜ 两人</div>
-  <div>夜枫日程以 2026 年 10 月各寺公布为准 ｜ <a href="../kansai-momiji-2026/" style="text-decoration:underline">对比 V1 大阪先行版</a></div>
+  <div class="mark">紅葉狩り · <em>关西红叶季七日 · V4.0 少而深版</em></div>
+  <div>2026.11.29 — 12.05 ｜ sequence KYOTO GOJO 4 晚 + 阪急 RESPIRE 2 晚 ｜ 两人</div>
+  <div>本页时刻・票价按 2026-09-19 各寺官方公告核对，标 ⚠ 项行前请复核 ｜ <a href="../kansai-momiji-2026/" style="text-decoration:underline">对比 V1 大阪先行版</a></div>
 </footer>
 
 </main>
