@@ -1,0 +1,9 @@
+.trip-pages{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 clamp(20px,4vw,56px);background:#f6efe3;border-bottom:1px solid rgba(25,22,18,.18);color:#191612;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.trip-pages .trip-pages-mark{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:14px;font-weight:600;letter-spacing:.12em;white-space:nowrap}
+.trip-pages .trip-pages-links{display:flex;gap:24px}
+.trip-pages a{display:block;padding:14px 0 12px;border-bottom:2px solid transparent;color:rgba(25,22,18,.65);font-size:13px;text-decoration:none;white-space:nowrap}
+.trip-pages a[aria-current="page"]{color:#c00000;border-bottom-color:#c00000;font-weight:600}
+.trip-pages a:hover{color:#c00000}
+.trip-pages a:focus-visible{outline:2px solid #c00000;outline-offset:4px}
+@media(max-width:420px){.trip-pages{gap:12px}.trip-pages .trip-pages-mark{font-size:12px}.trip-pages .trip-pages-links{gap:18px}.trip-pages a{font-size:12px}}
+@media print{.trip-pages{display:none}}
