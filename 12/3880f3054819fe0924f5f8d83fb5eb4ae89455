@@ -1,0 +1,36 @@
+kansai-momiji-2026-v2/checklist-data.js
+  s_dbe47e1a341aba::t_a86979de43f10c 17,47
+  s_dbe47e1a341aba::t_029871b0c8a51a 1-16,18-46,48-111
+kansai-momiji-2026-v2/checklist.js
+  s_dbe47e1a341aba::t_029871b0c8a51a 1-199,216-241
+  s_dbe47e1a341aba::t_a86979de43f10c 200-215
+kansai-momiji-2026-v2/checklist.html
+  s_dbe47e1a341aba::t_a86979de43f10c 104
+  s_dbe47e1a341aba::t_7db987b4420841 1-68,80-103,105-114
+  s_dbe47e1a341aba::t_029871b0c8a51a 69-79
+assets/trip-tabs.css
+  s_dbe47e1a341aba::t_7db987b4420841 1-9
+kansai-momiji-2026-v2/index.html
+  s_dbe47e1a341aba::t_7db987b4420841 8,316-322
+  s_dbe47e1a341aba::t_1bb7fb199b14e4 323
+kansai-momiji-2026-v2/checklist.css
+  s_dbe47e1a341aba::t_15b0c05d6d1e4b 106
+  s_dbe47e1a341aba::t_a86979de43f10c 107
+  s_dbe47e1a341aba::t_7db987b4420841 1-105,108-109
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "123880f3054819fe0924f5f8d83fb5eb4ae89455",
+  "prompts": {},
+  "sessions": {
+    "s_dbe47e1a341aba": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1814a-e51a-7071-b9eb-262044557530",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "guancheng ding <guancheng.ding@zoom.us>"
+    }
+  }
+}
